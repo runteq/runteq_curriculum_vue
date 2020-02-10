@@ -53,6 +53,9 @@ RSpec.configure do |config|
   # metadata: `fit`, `fdescribe` and `fcontext`, respectively.
   config.filter_run_when_matching :focus
 
+  # skip Namespace to use FactoryBot
+  config.include FactoryBot::Syntax::Methods
+
 =begin
   # Allows RSpec to persist some state between runs in order to support
   # the `--only-failures` and `--next-failure` CLI options. We recommend
