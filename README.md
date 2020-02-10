@@ -1,24 +1,62 @@
-# README
+# 学習カリキュラム（Vue.js編）
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+こちらは学習カリキュラム（Vue.js編）のリポジトリです。
 
-Things you may want to cover:
+## カリキュラム説明
 
-* Ruby version
+本カリキュラムでタスク管理アプリを作ってもらいます。
 
-* System dependencies
+Railsで作成されたAPIをフロントのVue.jsから呼び出すようなSPA構成のアプリケーション開発の基礎を学ぶことができます。
 
-* Configuration
 
-* Database creation
+## Features
 
-* Database initialization
+### フロントエンド
 
-* How to run the test suite
+- Vue.js 2.6.11
+- Webpacker
+- yarn
 
-* Services (job queues, cache servers, search engines, etc.)
+### CSSフレームワーク
 
-* Deployment instructions
+- Bootstrap4
 
-* ...
+### その他
+
+- See `Gemfile`.
+
+## Ruby version
+
+- See `.ruby-version`.
+
+## Rails version
+
+- See `Gemfile`.
+
+
+## Project initiation
+
+- リポジトリのクローン
+
+```bash
+$ git clone {各自に振られたGitリポジトリ}
+```
+
+- Gemのインストール
+
+```bash
+$ bundle install --path vendor/bundle
+```
+
+- npmのインストール
+
+```bash
+$ yarn install
+```
+
+## Run rails + webpack dev server
+
+```bash
+$ bundle exec foreman start
+```
+
