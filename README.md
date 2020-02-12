@@ -1,57 +1,63 @@
-# 学習カリキュラム（Vue.js編）
+# 学習カリキュラム Vue.js
 
-こちらは学習カリキュラム（Vue.js編）のリポジトリです。
-
-## カリキュラム説明
+こちらはRUNTEQのVue.js学習カリキュラムです。
 
 本カリキュラムでタスク管理アプリを作ってもらいます。
 
 Railsで作成されたAPIをフロントのVue.jsから呼び出すようなSPA構成のアプリケーション開発の基礎を学ぶことができます。
 
-
-## Features
-
-### フロントエンド
-
-- Vue.js 2.6.11
-- Webpacker
-- yarn
-
-### CSSフレームワーク
-
-- Bootstrap4
-
-### その他
-
-- See `Gemfile`.
-
 ## Ruby version
 
-- See `.ruby-version`.
+* 2.6.5
 
 ## Rails version
 
-- See `Gemfile`.
+* 6.0.2.1
 
+## System dependencies
+
+* MySQL 5.7
+* Node.js >= v12.14.0
+* Yarn >= 1.19.2
+
+## Vue.js version
+
+- Vue.js 2.6.11
 
 ## Project initiation
 
-- リポジトリのクローン
+* Gemのインストール
 
-```bash
-$ git clone {各自に振られたGitリポジトリ}
+```
+$ bundle install --path=vendor/bundle
 ```
 
-- Gemのインストール
+* npmのインストール
 
-```bash
-$ bundle install --path vendor/bundle
 ```
-
-- npmのインストール
-
-```bash
 $ yarn install
+```
+
+## Configuration
+
+ファイルの中身はご自身の環境に合わせて適宜変更してください
+
+* データベースの設定
+
+```
+$ cp config/database.yml.default config/database.yml
+```
+
+## Database creation
+
+```
+$ bundle exec rails db:reset
+```
+
+## Run rails server
+
+```
+$ bundle exec rails server
 ```
 
 ## Run rails + webpack dev server
@@ -65,4 +71,3 @@ $ bundle exec foreman start
 ```bash
 $ bundle exec rubocop -a
 ```
-
