@@ -60,3 +60,9 @@ $ yarn install
 $ bundle exec foreman start
 ```
 
+## Run rubocop（auto correct）
+
+```bash
+$ bundle exec rubocop -a
+```
+
