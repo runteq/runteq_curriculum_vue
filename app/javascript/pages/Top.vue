@@ -8,7 +8,9 @@
     <div class="text-center">
       <h3>タスクを管理しよう！</h3>
       <div class="mt-4">生活や仕事に関するタスクを見える化して抜け漏れを防ぎましょう。</div>
-      <button type="button" class="btn btn-dark mt-5">はじめる</button>
+      <router-link to="/tasks">
+        <button type="button" class="btn btn-dark mt-5">はじめる</button>
+      </router-link>
     </div>
     <footer class="mt-auto text-center">
       <small>Copyright &copy; 2020. RUNTEQ</small>
