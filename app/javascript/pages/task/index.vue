@@ -19,7 +19,7 @@
 
 <script>
 export default {
-  name: "TaskList",
+  name: "TaskIndex",
   data() {
     return {
       title: "タスク管理アプリ"

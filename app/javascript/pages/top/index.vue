@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  name: "Top",
+  name: "TopIndex",
   data() {
     return {
       title: "タスク管理アプリ"
