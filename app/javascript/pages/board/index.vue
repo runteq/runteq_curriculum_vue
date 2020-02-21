@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  name: "TaskIndex",
+  name: "BoardIndex",
   data() {
     return {
       tasks: [
