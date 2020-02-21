@@ -24,7 +24,7 @@
 
 <script>
 export default {
-  name: "TaskIndex",
+  name: "BoardIndex",
   data() {
     return {
       title: "タスク管理アプリ",
