@@ -6,11 +6,13 @@ class TasksController < ApplicationController
   # GET /tasks.json
   def index
     @tasks = Task.all
+    render json: { status: 'SUCCESS', message: 'Loaded tasks', data: @tasks }
   end
 
   # GET /tasks/1
   # GET /tasks/1.json
   def show
+    render json: { status: 'SUCCESS', message: 'Loaded the task', data: @task }
   end
 
   # POST /tasks
@@ -19,9 +21,9 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
 
     if @task.save
-      render :show, status: :created, location: @task
+      render json: { status: 'SUCCESS', message: 'Created the task', data: @task }
     else
-      render json: @task.errors, status: :unprocessable_entity
+      render json: { status: 'ERROR', data: @task.errors }, status: :bad_request
     end
   end
 
@@ -29,9 +31,9 @@ class TasksController < ApplicationController
   # PATCH/PUT /tasks/1.json
   def update
     if @task.update(task_params)
-      render :show, status: :ok, location: @task
+      render json: { status: 'SUCCESS', message: 'Updated the task', data: @task }
     else
-      render json: @task.errors, status: :unprocessable_entity
+      render json: { status: 'ERROR', data: @task.errors }, status: :bad_request
     end
   end
 
@@ -39,6 +41,7 @@ class TasksController < ApplicationController
   # DELETE /tasks/1.json
   def destroy
     @task.destroy
+    render json: { status: 'SUCCESS', message: 'Deleted the task', data: @task }
   end
 
   private
