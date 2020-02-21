@@ -21,6 +21,16 @@ export default {
     return {
       tasks: []
     }
+  },
+  created() {
+    this.fetchTasks();
+  },
+  methods: {
+    fetchTasks() {
+      this.$axios.get("tasks")
+        .then(res => this.tasks = res.data.data)
+        .catch(err => console.log(err.response.status));
+    }
   }
 }
 </script>
