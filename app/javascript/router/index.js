@@ -2,7 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 
 import TopIndex from "../pages/top/index";
-import BoardIndex from "../pages/board/index";
+import TaskIndex from "../pages/task/index";
 
 Vue.use(Router)
 
@@ -16,9 +16,9 @@ const router = new Router({
 
     },
     {
-      path: "/boards",
-      component: BoardIndex,
-      name: "BoardIndex",
+      path: "/tasks",
+      component: TaskIndex,
+      name: "TaskIndex",
     },
   ],
 })
