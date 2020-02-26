@@ -36,7 +36,7 @@ module RunteqCurriculumVue
       g.stylesheets false
       g.javascripts false
       g.helper false
-      g.template_engine false
+      g.template_engine :false
       g.test_framework :false
     end
   end
