@@ -1,12 +1,14 @@
 require 'rails_helper'
 RSpec.describe 'タスク管理', type: :system do
+  let :board_path do '/boards' end
+
   it 'トップページにはじめるボタンが表示されている' do
     visit root_path
     expect(page).to have_content('はじめる'), 'トップページにはじめるボタンが表示されていません'
   end
 
   it 'ボードページに戻るボタンが表示されている' do
-    visit '/boards'
+    visit board_path
     expect(page).to have_content('戻る'), 'ボードページに戻るボタンが表示されていません'
   end
 
@@ -17,7 +19,7 @@ RSpec.describe 'タスク管理', type: :system do
   end
 
   it 'ボードページからトップページに遷移できる' do
-    visit '/boards'
+    visit board_path
     click_link '戻る'
     expect(current_path).to eq('/'), 'トップページに遷移できていません'
   end
