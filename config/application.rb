@@ -32,6 +32,7 @@ module RunteqCurriculumVue
     # Don't generate system test files.
     config.generators.system_tests = nil
 
+    # rubocop:disable Lint/BooleanSymbol
     config.generators do |g|
       g.stylesheets false
       g.javascripts false
@@ -39,5 +40,6 @@ module RunteqCurriculumVue
       g.template_engine :false
       g.test_framework :false
     end
+    # rubocop:enable Lint/BooleanSymbol
   end
 end
