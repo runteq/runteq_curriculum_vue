@@ -9,7 +9,7 @@
               <span>&times;</span>
             </button>
           </div>
-          <div class="modal-body">
+          <div class="modal-body" v-if="task.description">
             <p>{{ task.description }}</p>
           </div>
           <div class="modal-footer">
