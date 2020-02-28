@@ -3,9 +3,7 @@
     <div class="d-flex">
       <div class="col-4 bg-light rounded shadow m-3 p-3">
         <div class="h4">TODO</div>
-        <div v-for="task in tasks" :key="task.id" class="bg-white border shadow-sm rounded my-2 p-4">
-          <span>{{ task.title }}</span>
-        </div>
+        <TaskItem v-for="task in tasks" :key="task.id" :task="task" />
       </div>
     </div>
     <div class="text-center">
@@ -15,8 +13,13 @@
 </template>
 
 <script>
+import TaskItem from "./components/TaskItem"
+
 export default {
   name: "TaskIndex",
+  components: {
+    TaskItem
+  },
   data() {
     return {
       tasks: []
