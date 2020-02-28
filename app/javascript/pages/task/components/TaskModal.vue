@@ -10,7 +10,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <p>Modal body text goes here.</p>
+            <p>{{ task.description }}</p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" @click="handleCloseModal">閉じる</button>
@@ -28,6 +28,10 @@ export default {
   props: {
     task: {
       title: {
+        type: String,
+        required: true
+      },
+      description: {
         type: String,
         required: true
       }
