@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :id="'task-modal-' + task.id">
     <div class="modal" @click.self="handleCloseModal">
       <div class="modal-dialog">
         <div class="modal-content">

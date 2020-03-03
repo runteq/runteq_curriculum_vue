@@ -6,6 +6,7 @@
         <div
           v-for="task in tasks"
           :key="task.id"
+          :id="'task-' + task.id"
           class="bg-white border shadow-sm rounded my-2 p-4"
           @click="handleShowModal(task)"
         >
