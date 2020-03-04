@@ -6,11 +6,21 @@
           <div class="modal-body">
             <div class="form-group">
               <label for="title">タイトル</label>
-              <input type="text" class="form-control" id="title" v-model="task.title">
+              <input
+                type="text"
+                class="form-control"
+                id="title"
+                v-model="task.title"
+              >
             </div>
             <div class="form-group">
               <label for="description">説明文</label>
-              <textarea class="form-control" id="description" rows="5" v-model="task.description"></textarea>
+              <textarea
+                class="form-control"
+                id="description"
+                rows="5"
+                v-model="task.description"
+              ></textarea>
             </div>
             <button class="btn btn-success">追加</button>
           </div>
