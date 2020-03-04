@@ -34,6 +34,7 @@
 <script>
 import TaskModal from "./components/TaskModal"
 import TaskCreateModal from "./components/TaskCreateModal"
+import { mapGetters, mapActions } from "vuex"
 
 export default {
   name: "TaskIndex",
@@ -43,21 +44,19 @@ export default {
   },
   data() {
     return {
-      tasks: [],
       taskDetail: {},
       isVisibleTaskModal: false,
       isVisibleTaskCreateModal: false
     }
   },
+  computed: {
+    ...mapGetters(["tasks"])
+  },
   created() {
     this.fetchTasks();
   },
   methods: {
-    fetchTasks() {
-      this.$axios.get("tasks")
-        .then(res => this.tasks = res.data)
-        .catch(err => console.log(err.status));
-    },
+    ...mapActions(["fetchTasks"]),
     handleShowModal(task) {
       this.isVisibleTaskModal = true;
       this.taskDetail = task;
