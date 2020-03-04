@@ -22,7 +22,7 @@
                 v-model="task.description"
               ></textarea>
             </div>
-            <button class="btn btn-success">追加</button>
+            <button class="btn btn-success" @click="handleCreateTask">追加</button>
           </div>
         </div>
       </div>
@@ -45,6 +45,9 @@ export default {
   methods: {
     handleCloseModal() {
       this.$emit('close-modal')
+    },
+    handleCreateTask() {
+      this.$emit('create-task', this.task)
     }
   }
 }

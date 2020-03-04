@@ -12,6 +12,7 @@
         >
           <span>{{ task.title }}</span>
         </div>
+        <button class="btn btn-secondary" @click="handleShowTaskCreateModal">タスクを追加</button>
       </div>
     </div>
     <div class="text-center">
@@ -20,22 +21,32 @@
     <transition name="fade">
       <TaskModal v-if="isVisibleTaskModal" :task="taskDetail" @close-modal="handleCloseModal" />
     </transition>
+    <transition name="fade">
+      <TaskCreateModal
+        v-if="isVisibleTaskCreateModal"
+        @close-modal="handleCloseTaskCreateModal"
+        @create-task="handleCreateTask"
+      />
+    </transition>
   </div>
 </template>
 
 <script>
 import TaskModal from "./components/TaskModal"
+import TaskCreateModal from "./components/TaskCreateModal"
 
 export default {
   name: "TaskIndex",
   components: {
-    TaskModal
+    TaskModal,
+    TaskCreateModal
   },
   data() {
     return {
       tasks: [],
       taskDetail: {},
-      isVisibleTaskModal: false
+      isVisibleTaskModal: false,
+      isVisibleTaskCreateModal: false
     }
   },
   created() {
@@ -54,6 +65,21 @@ export default {
     handleCloseModal() {
       this.isVisibleTaskModal = false;
       this.taskDetail = {};
+    },
+    handleShowTaskCreateModal() {
+      this.isVisibleTaskCreateModal = true;
+    },
+    handleCloseTaskCreateModal() {
+      this.isVisibleTaskCreateModal = false;
+    },
+    handleCreateTask(task) {
+      console.log(task)
+      this.$axios.post("tasks", task)
+        .then(res => {
+          console.log(res.data)
+          this.handleCloseTaskCreateModal()
+        })
+        .catch(err => console.log(err));
     }
   }
 }
