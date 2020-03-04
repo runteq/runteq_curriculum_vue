@@ -56,7 +56,10 @@ export default {
     this.fetchTasks();
   },
   methods: {
-    ...mapActions(["fetchTasks"]),
+    ...mapActions([
+      "fetchTasks",
+      "createTask"
+    ]),
     handleShowModal(task) {
       this.isVisibleTaskModal = true;
       this.taskDetail = task;
@@ -72,12 +75,8 @@ export default {
       this.isVisibleTaskCreateModal = false;
     },
     handleCreateTask(task) {
-      console.log(task)
-      this.$axios.post("tasks", task)
-        .then(res => {
-          console.log(res.data)
-          this.handleCloseTaskCreateModal()
-        })
+      this.createTask(task)
+        .then(this.handleCloseTaskCreateModal())
         .catch(err => console.log(err));
     }
   }

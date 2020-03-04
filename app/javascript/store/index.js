@@ -17,6 +17,9 @@ export default new Vuex.Store({
     SET_TASKS: (state, tasks) => {
       state.tasks = tasks
     },
+    ADD_TASK: (state, task) => {
+      state.tasks.push(task)
+    }
   },
 
   actions: {
@@ -26,6 +29,12 @@ export default new Vuex.Store({
           commit('SET_TASKS', res.data)
         })
         .catch(err => console.log(err.status));
+    },
+    createTask({ commit }, task) {
+      axios.post('tasks', task)
+        .then(res => {
+          commit('ADD_TASK', res.data)
+        })
     }
   },
 })
