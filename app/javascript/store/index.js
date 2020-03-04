@@ -20,12 +20,12 @@ export default new Vuex.Store({
   },
 
   actions: {
-    fetchTasks ({ state, commit }) {
-      axios.get("tasks")
+    fetchTasks({ commit }) {
+      axios.get('tasks')
         .then(res => {
           commit('SET_TASKS', res.data)
         })
         .catch(err => console.log(err.status));
-    },
+    }
   },
 })
