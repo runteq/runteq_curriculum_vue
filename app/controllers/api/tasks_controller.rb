@@ -1,4 +1,5 @@
 class Api::TasksController < ApplicationController
+  before_action :authenticate!
   before_action :set_task, only: %i[show update destroy]
 
   def index
