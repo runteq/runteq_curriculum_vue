@@ -74,10 +74,13 @@ export default {
     handleCloseTaskCreateModal() {
       this.isVisibleTaskCreateModal = false;
     },
-    handleCreateTask(task) {
-      this.createTask(task)
-        .then(this.handleCloseTaskCreateModal())
-        .catch(err => console.log(err));
+    async handleCreateTask(task) {
+      try {
+        await this.createTask(task)
+        this.handleCloseTaskCreateModal()
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }

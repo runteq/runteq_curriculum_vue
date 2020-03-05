@@ -28,10 +28,10 @@ export default new Vuex.Store({
         .then(res => {
           commit('SET_TASKS', res.data)
         })
-        .catch(err => console.log(err.status));
+        .catch(err => console.log(err.response));
     },
     createTask({ commit }, task) {
-      axios.post('tasks', task)
+      return axios.post('tasks', task)
         .then(res => {
           commit('ADD_TASK', res.data)
         })
