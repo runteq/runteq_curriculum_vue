@@ -34,7 +34,7 @@ RSpec.describe 'タスク管理', type: :system do
     task = create(:task, title: 'JavaScriptのfor文を理解する', description: 'JavaScript本格入門の第二章に書かれているfor文を読んで理解する')
     visit '/tasks'
     find("#task-#{task.id}").click
-    within "#task-modal-#{task.id}" do
+    within "#task-detail-modal-#{task.id}" do
       expect(page).to have_content('JavaScriptのfor文を理解する'), 'タスク詳細モーダルにタイトルが表示されていません'
       expect(page).to have_content('JavaScript本格入門の第二章に書かれているfor文を読んで理解する'), 'タスク詳細モーダルに説明文が表示されていません'
     end
@@ -44,7 +44,7 @@ RSpec.describe 'タスク管理', type: :system do
     task = create(:task, title: 'JavaScriptのfor文を理解する', description: 'JavaScript本格入門の第二章に書かれているfor文を読んで理解する')
     visit '/tasks'
     find("#task-#{task.id}").click
-    within "#task-modal-#{task.id}" do
+    within "#task-detail-modal-#{task.id}" do
       click_button('閉じる')
     end
     expect(page).to have_no_button('閉じる'), 'タスク詳細モーダルが閉じられていません'
