@@ -14,10 +14,10 @@ export default new Vuex.Store({
   },
 
   mutations: {
-    SET_TASKS: (state, tasks) => {
+    setTasks: (state, tasks) => {
       state.tasks = tasks
     },
-    ADD_TASK: (state, task) => {
+    addTask: (state, task) => {
       state.tasks.push(task)
     }
   },
@@ -26,14 +26,14 @@ export default new Vuex.Store({
     fetchTasks({ commit }) {
       axios.get('tasks')
         .then(res => {
-          commit('SET_TASKS', res.data)
+          commit('setTasks', res.data)
         })
         .catch(err => console.log(err.response));
     },
     createTask({ commit }, task) {
       return axios.post('tasks', task)
         .then(res => {
-          commit('ADD_TASK', res.data)
+          commit('addTask', res.data)
         })
     }
   },
