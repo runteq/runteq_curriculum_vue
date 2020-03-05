@@ -2,11 +2,11 @@ module Api::UserAuthenticator
   extend ActiveSupport::Concern
 
   def current_user
-    return @_current_user if @_current_user
+    return @current_user if @current_user
     return unless bearer_token
 
     payload, = User.decode bearer_token
-    @_current_user ||= User.find_by(id: payload['user_id'])
+    @current_user ||= User.find_by(id: payload['user_id'])
   end
 
   def authenticate!
