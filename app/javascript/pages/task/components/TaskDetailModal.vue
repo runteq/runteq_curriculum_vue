@@ -1,5 +1,5 @@
 <template>
-  <div :id="'task-modal-' + task.id">
+  <div :id="'task-detail-modal-' + task.id">
     <div class="modal" @click.self="handleCloseModal">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -24,7 +24,7 @@
 
 <script>
 export default {
-  name: "TaskModal",
+  name: "TaskDetailModal",
   props: {
     task: {
       title: {

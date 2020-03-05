@@ -8,7 +8,7 @@
           :key="task.id"
           :id="'task-' + task.id"
           class="bg-white border shadow-sm rounded my-2 p-4"
-          @click="handleShowModal(task)"
+          @click="handleShowTaskDetailModal(task)"
         >
           <span>{{ task.title }}</span>
         </div>
@@ -18,24 +18,24 @@
       <router-link :to="{ name: 'TopIndex' }" class="btn btn-dark mt-5">戻る</router-link>
     </div>
     <transition name="fade">
-      <TaskModal v-if="isVisibleTaskModal" :task="taskDetail" @close-modal="handleCloseModal" />
+      <TaskDetailModal v-if="isVisibleTaskDetailModal" :task="taskDetail" @close-modal="handleCloseTaskDetailModal" />
     </transition>
   </div>
 </template>
 
 <script>
-import TaskModal from "./components/TaskModal"
+import TaskDetailModal from "./components/TaskDetailModal"
 
 export default {
   name: "TaskIndex",
   components: {
-    TaskModal
+    TaskDetailModal
   },
   data() {
     return {
       tasks: [],
       taskDetail: {},
-      isVisibleTaskModal: false
+      isVisibleTaskDetailModal: false
     }
   },
   created() {
@@ -47,12 +47,12 @@ export default {
         .then(res => this.tasks = res.data)
         .catch(err => console.log(err.status));
     },
-    handleShowModal(task) {
-      this.isVisibleTaskModal = true;
+    handleShowTaskDetailModal(task) {
+      this.isVisibleTaskDetailModal = true;
       this.taskDetail = task;
     },
-    handleCloseModal() {
-      this.isVisibleTaskModal = false;
+    handleCloseTaskDetailModal() {
+      this.isVisibleTaskDetailModal = false;
       this.taskDetail = {};
     }
   }
