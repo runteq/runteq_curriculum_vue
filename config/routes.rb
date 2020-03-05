@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     resources :tasks
+    resources :sessions
   end
 
   get '*path', to: 'home#index'
