@@ -22,7 +22,10 @@
                 v-model="task.description"
               ></textarea>
             </div>
-            <button class="btn btn-success" @click="handleCreateTask">追加</button>
+            <div class="d-flex justify-content-between">
+              <button class="btn btn-success" @click="handleCreateTask">追加</button>
+              <button class="btn btn-secondary" @click="handleCloseModal">閉じる</button>
+            </div>
           </div>
         </div>
       </div>
