@@ -65,9 +65,20 @@ RSpec.describe 'タスク管理', type: :system do
   end
 
   it 'タイトルと説明文を入力して「追加」をクリックしたら新しいタスクが追加されている' do
+    visit '/tasks'
+    click_button('タスクを追加')
+    fill_in 'タイトル', with: 'JSを勉強する'
+    fill_in '説明文', with: 'ES6完全に理解する'
+    click_on '追加'
+    expect(page).to_not have_selector('#task-create-modal'), 'タスク追加モーダルが閉じられていません'
+    expect(page).to have_content('JSを勉強する'), '新規追加したタスクが画面に表示されていません'
   end
 
   it 'タイトルを入力せず「追加」をクリックしたら新しいタスクが追加されず、モーダルも閉じない' do
+    visit '/tasks'
+    click_button('タスクを追加')
+    sleep 0.5 # Bootstrapのモーダル対応
+    click_on '追加'
+    expect(page).to have_selector('#task-create-modal'), 'タスク追加モーダルが閉じてしまっています'
   end
-
 end
