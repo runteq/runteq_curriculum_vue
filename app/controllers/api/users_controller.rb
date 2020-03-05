@@ -9,9 +9,14 @@ class Api::UsersController < ApplicationController
     end
   end
 
+  def show
+    user = User.find(params[:id])
+    render json: user, methods: [:avatar_url]
+  end
+
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :name)
+    params.require(:user).permit(:email, :password, :password_confirmation, :name, :avatar)
   end
 end
