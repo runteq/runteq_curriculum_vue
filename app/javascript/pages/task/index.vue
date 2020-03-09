@@ -1,24 +1,47 @@
 <template>
   <div>
-    <div class="d-flex">
-      <div class="col-4 bg-light rounded shadow m-3 p-3">
-        <div class="h4">TODO</div>
-        <div
-          v-for="task in tasks"
-          :key="task.id"
-          :id="'task-' + task.id"
-          class="bg-white border shadow-sm rounded my-2 p-4 d-flex align-items-center"
-          @click="handleShowTaskDetailModal(task)"
-        >
-          <div class="col-8">
-            <span>{{ task.title }}</span>
+    <div class="row">
+      <div class="col-12 col-lg-6">
+        <div class="bg-light rounded shadow m-3 p-3">
+          <div class="h4">TODO</div>
+          <div
+            v-for="task in todoTasks"
+            :key="task.id"
+            :id="'task-' + task.id"
+            class="bg-white border shadow-sm rounded my-2 p-4 d-flex align-items-center"
+            @click="handleShowTaskDetailModal(task)"
+          >
+            <div class="col-8">
+              <span>{{ task.title }}</span>
+            </div>
+            <div class="col-4 text-right">
+              <button type="button" class="btn btn-success" @click.stop="handleShowTaskEditModal(task)">編集</button>
+              <button type="button" class="btn btn-danger" @click.stop="handleDeleteTask(task)">削除</button>
+            </div>
           </div>
-          <div class="col-4 text-right">
-            <button type="button" class="btn btn-success" @click.stop="handleShowTaskEditModal(task)">編集</button>
-            <button type="button" class="btn btn-danger" @click.stop="handleDeleteTask(task)">削除</button>
-          </div>
+          <button class="btn btn-secondary" @click="handleShowTaskCreateModal">タスクを追加</button>
         </div>
-        <button class="btn btn-secondary" @click="handleShowTaskCreateModal">タスクを追加</button>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="bg-light rounded shadow m-3 p-3">
+          <div class="h4">DONE</div>
+          <div
+            v-for="task in doneTasks"
+            :key="task.id"
+            :id="'task-' + task.id"
+            class="bg-white border shadow-sm rounded my-2 p-4 d-flex align-items-center"
+            @click="handleShowTaskDetailModal(task)"
+          >
+            <div class="col-8">
+              <span>{{ task.title }}</span>
+            </div>
+            <div class="col-4 text-right">
+              <button type="button" class="btn btn-success" @click.stop="handleShowTaskEditModal(task)">編集</button>
+              <button type="button" class="btn btn-danger" @click.stop="handleDeleteTask(task)">削除</button>
+            </div>
+          </div>
+          <button class="btn btn-secondary" @click="handleShowTaskCreateModal">タスクを追加</button>
+        </div>
       </div>
     </div>
     <div class="text-center">
@@ -68,7 +91,17 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["tasks"])
+    ...mapGetters(["tasks"]),
+    todoTasks() {
+      return this.tasks.filter(task => {
+        return task.status == "todo"
+      })
+    },
+    doneTasks() {
+      return this.tasks.filter(task => {
+        return task.status == "done"
+      })
+    }
   },
   created() {
     this.fetchTasks();
