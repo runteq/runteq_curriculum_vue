@@ -19,6 +19,11 @@ export default new Vuex.Store({
     },
     addTask: (state, task) => {
       state.tasks.push(task)
+    },
+    deleteTask: (state, deleteTask) => {
+      state.tasks = state.tasks.filter(task => {
+        return task.id != deleteTask.id
+      })
     }
   },
 
@@ -34,6 +39,12 @@ export default new Vuex.Store({
       return axios.post('tasks', task)
         .then(res => {
           commit('addTask', res.data)
+        })
+    },
+    deleteTask({commit}, task) {
+      return axios.delete(`tasks/${task.id}`)
+        .then(res => {
+          commit('deleteTask', res.data)
         })
     }
   },

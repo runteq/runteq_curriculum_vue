@@ -7,10 +7,16 @@
           v-for="task in tasks"
           :key="task.id"
           :id="'task-' + task.id"
-          class="bg-white border shadow-sm rounded my-2 p-4"
+          class="bg-white border shadow-sm rounded my-2 p-4 d-flex align-items-center"
           @click="handleShowTaskDetailModal(task)"
         >
-          <span>{{ task.title }}</span>
+          <div class="col-8">
+            <span>{{ task.title }}</span>
+          </div>
+          <div class="col-4 text-right">
+            <button type="button" class="btn btn-success">編集</button>
+            <button type="button" class="btn btn-danger" @click="handleDeleteTask(task)">削除</button>
+          </div>
         </div>
         <button class="btn btn-secondary" @click="handleShowTaskCreateModal">タスクを追加</button>
       </div>
@@ -58,7 +64,8 @@ export default {
   methods: {
     ...mapActions([
       "fetchTasks",
-      "createTask"
+      "createTask",
+      "deleteTask"
     ]),
     handleShowTaskDetailModal(task) {
       this.isVisibleTaskDetailModal = true;
@@ -78,6 +85,13 @@ export default {
       try {
         await this.createTask(task)
         this.handleCloseTaskCreateModal()
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async handleDeleteTask(task) {
+      try {
+        await this.deleteTask(task)
       } catch (error) {
         console.log(error)
       }
