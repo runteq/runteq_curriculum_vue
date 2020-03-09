@@ -14,8 +14,8 @@
             <span>{{ task.title }}</span>
           </div>
           <div class="col-4 text-right">
-            <button type="button" class="btn btn-success">編集</button>
-            <button type="button" class="btn btn-danger" @click="handleDeleteTask(task)">削除</button>
+            <button type="button" class="btn btn-success" @click.stop="handleShowTaskEditModal(task)">編集</button>
+            <button type="button" class="btn btn-danger" @click.stop="handleDeleteTask(task)">削除</button>
           </div>
         </div>
         <button class="btn btn-secondary" @click="handleShowTaskCreateModal">タスクを追加</button>
@@ -34,6 +34,14 @@
         @create-task="handleCreateTask"
       />
     </transition>
+    <transition name="fade">
+      <TaskEditModal
+        v-if="isVisibleTaskEditModal"
+        :task="taskEdit"
+        @close-modal="handleCloseTaskEditModal"
+        @update-task="handleUpdateTask"
+      />
+    </transition>
   </div>
 </template>
 
@@ -41,18 +49,22 @@
 import { mapGetters, mapActions } from "vuex"
 import TaskDetailModal from "./components/TaskDetailModal"
 import TaskCreateModal from "./components/TaskCreateModal"
+import TaskEditModal from "./components/TaskEditModal"
 
 export default {
   name: "TaskIndex",
   components: {
     TaskDetailModal,
-    TaskCreateModal
+    TaskCreateModal,
+    TaskEditModal
   },
   data() {
     return {
       taskDetail: {},
       isVisibleTaskDetailModal: false,
-      isVisibleTaskCreateModal: false
+      isVisibleTaskCreateModal: false,
+      isVisibleTaskEditModal: false,
+      taskEdit: {}
     }
   },
   computed: {
@@ -65,7 +77,8 @@ export default {
     ...mapActions([
       "fetchTasks",
       "createTask",
-      "deleteTask"
+      "deleteTask",
+      "updateTask"
     ]),
     handleShowTaskDetailModal(task) {
       this.isVisibleTaskDetailModal = true;
@@ -81,6 +94,14 @@ export default {
     handleCloseTaskCreateModal() {
       this.isVisibleTaskCreateModal = false;
     },
+    handleShowTaskEditModal(task) {
+      this.taskEdit = Object.assign({}, task)
+      this.isVisibleTaskEditModal = true;
+    },
+    handleCloseTaskEditModal() {
+      this.isVisibleTaskEditModal = false;
+      this.taskEdit = {};
+    },
     async handleCreateTask(task) {
       try {
         await this.createTask(task)
@@ -95,7 +116,15 @@ export default {
       } catch (error) {
         console.log(error)
       }
-    }
+    },
+    async handleUpdateTask(task) {
+      try {
+        await this.updateTask(task)
+        this.handleCloseTaskEditModal()
+      } catch (error) {
+        console.log(error)
+      }
+    },
   }
 }
 </script>
