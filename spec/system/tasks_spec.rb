@@ -81,4 +81,25 @@ RSpec.describe 'タスク管理', type: :system do
     click_on '追加'
     expect(page).to have_selector('#task-create-modal'), 'タスク追加モーダルが閉じてしまっています'
   end
+
+  it '「編集」ボタンを押すとモーダルが表示され、各フィールドの値を変更して「更新」ボタンを押すと一覧画面にその内容が反映される' do
+    task = create(:task, title: 'JavaScriptのfor文を理解する', description: 'JavaScript本格入門の第二章に書かれているfor文を読んで理解する')
+    visit '/tasks'
+    within "#task-#{task.id}" do
+      click_on '編集'
+    end
+    fill_in 'タイトル', with: 'JavaScriptのfor文とif文を理解する'
+    fill_in '説明文', with: 'ES6とES5を完全にする'
+    click_on '更新'
+    expect(page).to have_content('JavaScriptのfor文とif文を理解する'), '更新後のタイトルがが一覧画面に表示されていません'
+  end
+
+  it '「削除」ボタンを押すとタスクが一覧画面から削除される' do
+    task = create(:task, title: 'JavaScriptのfor文を理解する', description: 'JavaScript本格入門の第二章に書かれているfor文を読んで理解する')
+    visit '/tasks'
+    within "#task-#{task.id}" do
+      click_on '削除'
+    end
+    expect(page).not_to have_content('JavaScriptのfor文を理解する'), 'タスクが一覧画面から削除されていません'
+  end
 end
