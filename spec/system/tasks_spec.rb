@@ -64,11 +64,12 @@ RSpec.describe 'タスク管理', type: :system do
     expect(page).to_not have_selector('#task-create-modal'), 'タスク追加モーダルが閉じられていません'
   end
 
-  it 'タイトルと説明文を入力して「追加」をクリックしたら新しいタスクが追加されている' do
+  it 'タイトルと説明文とステータスを入力して「追加」をクリックしたら新しいタスクが追加されている' do
     visit '/tasks'
     click_button('タスクを追加')
     fill_in 'タイトル', with: 'JSを勉強する'
     fill_in '説明文', with: 'ES6完全に理解する'
+    select 'TODO', from: 'ステータス'
     click_on '追加'
     expect(page).to_not have_selector('#task-create-modal'), 'タスク追加モーダルが閉じられていません'
     expect(page).to have_content('JSを勉強する'), '新規追加したタスクが画面に表示されていません'
@@ -101,5 +102,52 @@ RSpec.describe 'タスク管理', type: :system do
       click_on '削除'
     end
     expect(page).not_to have_content('JavaScriptのfor文を理解する'), 'タスクが一覧画面から削除されていません'
+  end
+
+  it '「TODO」と「DONE」の二つのタスクリストが存在していること' do
+    visit '/tasks'
+    expect(page).to have_content('TODO'), '「TODO」の文言が表示されたタスクリストが存在しません'
+    expect(page).to have_content('DONE'), '「DONE」の文言が表示されたタスクリストが存在しません'
+  end
+
+  it 'TODOステータスのタスクはTODOタスクリストに表示されること' do
+    visit '/tasks'
+    click_button('タスクを追加')
+    fill_in 'タイトル', with: 'JSを勉強する'
+    fill_in '説明文', with: 'ES6完全に理解する'
+    select 'TODO', from: 'ステータス'
+    click_on '追加'
+    expect(page).to_not have_selector('#task-create-modal'), 'タスク追加モーダルが閉じられていません'
+    within "#todo-list" do
+      expect(page).to have_content('JSを勉強する'), '新規追加したタスクがTODOタスクリストに表示されていません'
+    end
+  end
+
+  it 'DONEステータスのタスクはDONEタスクリストに表示されること' do
+    visit '/tasks'
+    click_button('タスクを追加')
+    fill_in 'タイトル', with: 'JSを勉強する'
+    fill_in '説明文', with: 'ES6完全に理解する'
+    select 'DONE', from: 'ステータス'
+    click_on '追加'
+    expect(page).to_not have_selector('#task-create-modal'), 'タスク追加モーダルが閉じられていません'
+    within "#done-list" do
+      expect(page).to have_content('JSを勉強する'), '新規追加したタスクがDONEタスクリストに表示されていません'
+    end
+  end
+
+  it 'TODOのタスクをDONEに更新したらDONEタスクリストに移動すること' do
+    task = create(:task, title: 'JavaScriptのfor文を理解する', description: 'JavaScript本格入門の第二章に書かれているfor文を読んで理解する', status: :todo)
+    visit '/tasks'
+    within "#todo-list" do
+      within "#task-#{task.id}" do
+        click_on '編集'
+      end
+    end
+    select 'DONE', from: 'ステータス'
+    click_on '更新'
+    within "#done-list" do
+      expect(page).to have_content('JavaScriptのfor文を理解する'), 'DONEに更新したタスクがDONEタスクリストに表示されていません'
+    end
   end
 end
