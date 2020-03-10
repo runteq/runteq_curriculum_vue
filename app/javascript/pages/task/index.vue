@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container-fluid">
     <div class="row">
       <task-list :tasks="todoTasks"
         @handleShowTaskDetailModal="handleShowTaskDetailModal"
