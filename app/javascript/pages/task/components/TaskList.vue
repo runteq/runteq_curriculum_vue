@@ -11,7 +11,6 @@
         >
         </task>
       </template>
-      <button class="btn btn-secondary" @click="handleShowTaskCreateModal">タスクを追加</button>
     </div>
   </div>
 </template>
@@ -28,11 +27,5 @@
     components: {
       Task
     },
-
-    methods: {
-      handleShowTaskCreateModal() {
-        this.$emit('handleShowTaskCreateModal')
-      },
-    }
   }
 </script>

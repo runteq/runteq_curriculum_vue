@@ -23,6 +23,9 @@
       </task-list>
     </div>
     <div class="text-center">
+      <button class="btn btn-secondary" @click="handleShowTaskCreateModal">タスクを追加</button>
+    </div>
+    <div class="text-center">
       <router-link :to="{ name: 'TopIndex' }" class="btn btn-dark mt-5">戻る</router-link>
     </div>
     <transition name="fade">
