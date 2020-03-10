@@ -44,13 +44,19 @@
 <script>
 export default {
   name: "TaskCreateModal",
-  data() {
-    return {
-      task: {
-        title: '',
-        description: '',
-        status: ''
-      }
+  // data() {
+  //   return {
+  //     task: {
+  //       title: '',
+  //       description: '',
+  //       status: ''
+  //     }
+  //   }
+  // },
+  props: {
+    task: {
+      type: Object,
+      required: true
     }
   },
   methods: {
