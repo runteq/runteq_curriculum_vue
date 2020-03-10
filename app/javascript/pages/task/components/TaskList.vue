@@ -23,10 +23,6 @@
       tasks: {
         type: Array,
         required: true
-      },
-      taskStatus: {
-        type: String,
-        required: true
       }
     },
     components: {
@@ -35,7 +31,7 @@
 
     methods: {
       handleShowTaskCreateModal() {
-        this.$emit('handleShowTaskCreateModal', this.taskStatus)
+        this.$emit('handleShowTaskCreateModal')
       },
     }
   }

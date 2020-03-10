@@ -6,7 +6,6 @@
         @handleShowTaskCreateModal="handleShowTaskCreateModal"
         @handleShowTaskEditModal="handleShowTaskEditModal"
         @handleDeleteTask="handleDeleteTask"
-        task-status="todo"
       >
         <template v-slot:header>
           <div class="h4">TODO</div>
@@ -17,7 +16,6 @@
         @handleShowTaskCreateModal="handleShowTaskCreateModal"
         @handleShowTaskEditModal="handleShowTaskEditModal"
         @handleDeleteTask="handleDeleteTask"
-        task-status="done"
       >
         <template v-slot:header>
           <div class="h4">DONE</div>
@@ -35,7 +33,6 @@
         v-if="isVisibleTaskCreateModal"
         @close-modal="handleCloseTaskCreateModal"
         @create-task="handleCreateTask"
-        :task="newTask"
       />
     </transition>
     <transition name="fade">
@@ -70,8 +67,7 @@ export default {
       isVisibleTaskDetailModal: false,
       isVisibleTaskCreateModal: false,
       isVisibleTaskEditModal: false,
-      taskEdit: {},
-      newTask: {}
+      taskEdit: {}
     }
   },
   computed: {
@@ -105,8 +101,7 @@ export default {
       this.isVisibleTaskDetailModal = false;
       this.taskDetail = {};
     },
-    handleShowTaskCreateModal(taskStatus) {
-      this.newTask = { status: taskStatus }
+    handleShowTaskCreateModal() {
       this.isVisibleTaskCreateModal = true;
     },
     handleCloseTaskCreateModal() {
