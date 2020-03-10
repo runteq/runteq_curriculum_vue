@@ -6,6 +6,7 @@
         @handleShowTaskCreateModal="handleShowTaskCreateModal"
         @handleShowTaskEditModal="handleShowTaskEditModal"
         @handleDeleteTask="handleDeleteTask"
+        taskListId="todo-list"
       >
         <template v-slot:header>
           <div class="h4">TODO</div>
@@ -16,6 +17,7 @@
         @handleShowTaskCreateModal="handleShowTaskCreateModal"
         @handleShowTaskEditModal="handleShowTaskEditModal"
         @handleDeleteTask="handleDeleteTask"
+        taskListId="done-list"
       >
         <template v-slot:header>
           <div class="h4">DONE</div>

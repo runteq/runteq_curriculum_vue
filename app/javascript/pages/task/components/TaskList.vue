@@ -1,6 +1,6 @@
 <template>
   <div class="col-12 col-lg-6">
-    <div class="bg-light rounded shadow m-3 p-3">
+    <div :id="taskListId" class="bg-light rounded shadow m-3 p-3">
       <slot name="header">タスク区分</slot>
       <template v-for="task in tasks">
         <task :task="task"
@@ -21,6 +21,10 @@
     props: {
       tasks: {
         type: Array,
+        required: true
+      },
+      taskListId: {
+        type: String,
         required: true
       }
     },
