@@ -3,19 +3,19 @@
     <div :id="taskListId" class="bg-light rounded shadow m-3 p-3">
       <slot name="header">タスク区分</slot>
       <template v-for="task in tasks">
-        <task :task="task"
+        <task-item :task="task"
           @handleShowTaskDetailModal="$listeners['handleShowTaskDetailModal']"
           @handleShowTaskCreateModal="$listeners['handleShowTaskCreateModal']"
           @handleShowTaskEditModal="$listeners['handleShowTaskEditModal']"
           @handleDeleteTask="$listeners['handleDeleteTask']"
         >
-        </task>
+        </task-item>
       </template>
     </div>
   </div>
 </template>
 <script>
-  import Task from "./Task"
+  import TaskItem from "./TaskItem"
   export default {
     name: "TaskIndex",
     props: {
@@ -29,7 +29,7 @@
       }
     },
     components: {
-      Task
+      TaskItem
     },
   }
 </script>
