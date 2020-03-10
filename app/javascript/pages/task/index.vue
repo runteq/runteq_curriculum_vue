@@ -1,48 +1,26 @@
 <template>
   <div>
     <div class="row">
-      <div class="col-12 col-lg-6">
-        <div class="bg-light rounded shadow m-3 p-3">
+      <task-list :tasks="todoTasks"
+        @handleShowTaskDetailModal="handleShowTaskDetailModal"
+        @handleShowTaskCreateModal="handleShowTaskCreateModal"
+        @handleShowTaskEditModal="handleShowTaskEditModal"
+        @handleDeleteTask="handleDeleteTask"
+      >
+        <template v-slot:header>
           <div class="h4">TODO</div>
-          <div
-            v-for="task in todoTasks"
-            :key="task.id"
-            :id="'task-' + task.id"
-            class="bg-white border shadow-sm rounded my-2 p-4 d-flex align-items-center"
-            @click="handleShowTaskDetailModal(task)"
-          >
-            <div class="col-8">
-              <span>{{ task.title }}</span>
-            </div>
-            <div class="col-4 text-right">
-              <button type="button" class="btn btn-success" @click.stop="handleShowTaskEditModal(task)">編集</button>
-              <button type="button" class="btn btn-danger" @click.stop="handleDeleteTask(task)">削除</button>
-            </div>
-          </div>
-          <button class="btn btn-secondary" @click="handleShowTaskCreateModal">タスクを追加</button>
-        </div>
-      </div>
-      <div class="col-12 col-lg-6">
-        <div class="bg-light rounded shadow m-3 p-3">
+        </template>
+      </task-list>
+      <task-list :tasks="doneTasks"
+        @handleShowTaskDetailModal="handleShowTaskDetailModal"
+        @handleShowTaskCreateModal="handleShowTaskCreateModal"
+        @handleShowTaskEditModal="handleShowTaskEditModal"
+        @handleDeleteTask="handleDeleteTask"
+      >
+        <template v-slot:header>
           <div class="h4">DONE</div>
-          <div
-            v-for="task in doneTasks"
-            :key="task.id"
-            :id="'task-' + task.id"
-            class="bg-white border shadow-sm rounded my-2 p-4 d-flex align-items-center"
-            @click="handleShowTaskDetailModal(task)"
-          >
-            <div class="col-8">
-              <span>{{ task.title }}</span>
-            </div>
-            <div class="col-4 text-right">
-              <button type="button" class="btn btn-success" @click.stop="handleShowTaskEditModal(task)">編集</button>
-              <button type="button" class="btn btn-danger" @click.stop="handleDeleteTask(task)">削除</button>
-            </div>
-          </div>
-          <button class="btn btn-secondary" @click="handleShowTaskCreateModal">タスクを追加</button>
-        </div>
-      </div>
+        </template>
+      </task-list>
     </div>
     <div class="text-center">
       <router-link :to="{ name: 'TopIndex' }" class="btn btn-dark mt-5">戻る</router-link>
@@ -73,10 +51,12 @@ import { mapGetters, mapActions } from "vuex"
 import TaskDetailModal from "./components/TaskDetailModal"
 import TaskCreateModal from "./components/TaskCreateModal"
 import TaskEditModal from "./components/TaskEditModal"
+import TaskList from "./components/TaskList"
 
 export default {
   name: "TaskIndex",
   components: {
+    TaskList,
     TaskDetailModal,
     TaskCreateModal,
     TaskEditModal
