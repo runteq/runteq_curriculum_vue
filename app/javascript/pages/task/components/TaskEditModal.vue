@@ -38,7 +38,20 @@
 export default {
   name: "TaskEditModal",
   props: {
-    task: Object
+    task: {
+      id: {
+        type: Number,
+        required: true
+      },
+      title: {
+        type: String,
+        required: true
+      },
+      description: {
+        type: String,
+        required: true
+      }
+    }
   },
   methods: {
     handleCloseModal() {
