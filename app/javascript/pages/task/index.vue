@@ -34,14 +34,12 @@
         @create-task="handleCreateTask"
       />
     </transition>
-    <transition name="fade">
-      <TaskEditModal
-        v-if="isVisibleTaskEditModal"
-        :task="taskEdit"
-        @close-modal="handleCloseTaskEditModal"
-        @update-task="handleUpdateTask"
-      />
-    </transition>
+    <TaskEditModal
+      v-if="isVisibleTaskEditModal"
+      :task="taskEdit"
+      @close-modal="handleCloseTaskEditModal"
+      @update-task="handleUpdateTask"
+    />
   </div>
 </template>
 
