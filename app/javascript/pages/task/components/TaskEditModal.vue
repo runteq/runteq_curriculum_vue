@@ -1,5 +1,5 @@
 <template>
-  <div id="task-create-modal">
+  <div :id="'task-edit-modal-' + task.id">
     <div class="modal" @click.self="handleCloseModal">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -36,7 +36,7 @@
 
 <script>
 export default {
-  name: "TaskUpdateModal",
+  name: "TaskEditModal",
   props: {
     task: Object
   },
