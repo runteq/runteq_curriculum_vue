@@ -13,6 +13,8 @@
             <p>{{ task.description }}</p>
           </div>
           <div class="modal-footer">
+            <button type="button" class="btn btn-success" @click="handleShowTaskEditModal">編集</button>
+            <button type="button" class="btn btn-danger" @click="handleDeleteTask">削除</button>
             <button type="button" class="btn btn-secondary" @click="handleCloseModal">閉じる</button>
           </div>
         </div>
@@ -40,7 +42,13 @@ export default {
   methods: {
     handleCloseModal() {
       this.$emit('close-modal')
-    }
+    },
+    handleShowTaskEditModal() {
+      this.$emit('show-edit-modal', this.task)
+    },
+    handleDeleteTask() {
+      this.$emit('delete-task', this.task)
+    },
   }
 }
 </script>

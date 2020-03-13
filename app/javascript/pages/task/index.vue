@@ -31,7 +31,13 @@
       <router-link :to="{ name: 'TopIndex' }" class="btn btn-dark mt-5">戻る</router-link>
     </div>
     <transition name="fade">
-      <TaskDetailModal v-if="isVisibleTaskDetailModal" :task="taskDetail" @close-modal="handleCloseTaskDetailModal" />
+      <TaskDetailModal
+        v-if="isVisibleTaskDetailModal"
+        :task="taskDetail"
+        @close-modal="handleCloseTaskDetailModal"
+        @delete-task="handleDeleteTask"
+        @show-edit-modal="handleShowTaskEditModal"
+      />
     </transition>
     <transition name="fade">
       <TaskCreateModal
@@ -40,14 +46,12 @@
         @create-task="handleCreateTask"
       />
     </transition>
-    <transition name="fade">
-      <TaskEditModal
-        v-if="isVisibleTaskEditModal"
-        :task="taskEdit"
-        @close-modal="handleCloseTaskEditModal"
-        @update-task="handleUpdateTask"
-      />
-    </transition>
+    <TaskEditModal
+      v-if="isVisibleTaskEditModal"
+      :task="taskEdit"
+      @close-modal="handleCloseTaskEditModal"
+      @update-task="handleUpdateTask"
+    />
   </div>
 </template>
 
@@ -114,6 +118,7 @@ export default {
     },
     handleShowTaskEditModal(task) {
       this.taskEdit = Object.assign({}, task)
+      this.handleCloseTaskDetailModal();
       this.isVisibleTaskEditModal = true;
     },
     handleCloseTaskEditModal() {
@@ -122,25 +127,26 @@ export default {
     },
     async handleCreateTask(task) {
       try {
-        await this.createTask(task)
-        this.handleCloseTaskCreateModal()
+        await this.createTask(task);
+        this.handleCloseTaskCreateModal();
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     },
     async handleDeleteTask(task) {
       try {
-        await this.deleteTask(task)
+        await this.deleteTask(task);
+        this.handleCloseTaskDetailModal();
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     },
     async handleUpdateTask(task) {
       try {
-        await this.updateTask(task)
-        this.handleCloseTaskEditModal()
+        await this.updateTask(task);
+        this.handleCloseTaskEditModal();
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     },
   }
