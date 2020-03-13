@@ -26,6 +26,7 @@
               <label for="status">ステータス</label>
               <select id="status" v-model="task.status" class="form-control">
                 <option value="todo">TODO</option>
+                <option value="doing">DOING</option>
                 <option value="done">DONE</option>
               </select>
             </div>

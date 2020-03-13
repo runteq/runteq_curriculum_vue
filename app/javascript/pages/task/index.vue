@@ -11,6 +11,15 @@
         </template>
       </TaskList>
       <TaskList
+        :tasks="doingTasks"
+        taskListId="doing-list"
+        @handleShowTaskDetailModal="handleShowTaskDetailModal"
+      >
+        <template v-slot:header>
+          <div class="h4">DOING</div>
+        </template>
+      </TaskList>
+      <TaskList
         :tasks="doneTasks"
         taskListId="done-list"
         @handleShowTaskDetailModal="handleShowTaskDetailModal"
@@ -80,6 +89,11 @@ export default {
     todoTasks() {
       return this.tasks.filter(task => {
         return task.status == "todo"
+      })
+    },
+    doingTasks() {
+      return this.tasks.filter(task => {
+        return task.status == "doing"
       })
     },
     doneTasks() {
