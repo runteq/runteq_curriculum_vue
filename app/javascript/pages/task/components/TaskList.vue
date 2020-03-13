@@ -15,21 +15,21 @@
   </div>
 </template>
 <script>
-  import TaskItem from "./TaskItem"
-  export default {
-    name: "TaskList",
-    props: {
-      tasks: {
-        type: Array,
-        required: true
-      },
-      taskListId: {
-        type: String,
-        required: true
-      }
+import TaskItem from "./TaskItem"
+export default {
+  name: "TaskList",
+  props: {
+    tasks: {
+      type: Array,
+      required: true
     },
-    components: {
-      TaskItem
-    },
-  }
+    taskListId: {
+      type: String,
+      required: true
+    }
+  },
+  components: {
+    TaskItem
+  },
+}
 </script>

@@ -16,28 +16,28 @@
 </template>
 
 <script>
-  export default {
-    name: "TaskItem",
-    props: {
-      task: {
-        type: Object,
-        required: true
-      }
-    },
+export default {
+  name: "TaskItem",
+  props: {
+    task: {
+      type: Object,
+      required: true
+    }
+  },
 
-    methods: {
-      handleShowTaskDetailModal(task) {
-        this.$emit('handleShowTaskDetailModal', task)
-      },
-      handleShowTaskCreateModal() {
-        this.$emit('handleShowTaskCreateModal')
-      },
-      handleShowTaskEditModal(task) {
-        this.$emit('handleShowTaskEditModal', task)
-      },
-      handleDeleteTask(task) {
-        this.$emit('handleDeleteTask', task)
-      }
+  methods: {
+    handleShowTaskDetailModal(task) {
+      this.$emit('handleShowTaskDetailModal', task)
+    },
+    handleShowTaskCreateModal() {
+      this.$emit('handleShowTaskCreateModal')
+    },
+    handleShowTaskEditModal(task) {
+      this.$emit('handleShowTaskEditModal', task)
+    },
+    handleDeleteTask(task) {
+      this.$emit('handleDeleteTask', task)
     }
   }
+}
 </script>
