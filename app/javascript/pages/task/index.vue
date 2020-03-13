@@ -1,17 +1,19 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      <TaskList :tasks="todoTasks"
-        @handleShowTaskDetailModal="handleShowTaskDetailModal"
+      <TaskList
+        :tasks="todoTasks"
         taskListId="todo-list"
+        @handleShowTaskDetailModal="handleShowTaskDetailModal"
       >
         <template v-slot:header>
           <div class="h4">TODO</div>
         </template>
       </TaskList>
-      <TaskList :tasks="doneTasks"
-        @handleShowTaskDetailModal="handleShowTaskDetailModal"
+      <TaskList
+        :tasks="doneTasks"
         taskListId="done-list"
+        @handleShowTaskDetailModal="handleShowTaskDetailModal"
       >
         <template v-slot:header>
           <div class="h4">DONE</div>
