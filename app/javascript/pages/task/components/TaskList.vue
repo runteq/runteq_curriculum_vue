@@ -5,9 +5,6 @@
       <template v-for="task in tasks">
         <TaskItem :task="task"
           @handleShowTaskDetailModal="$listeners['handleShowTaskDetailModal']"
-          @handleShowTaskCreateModal="$listeners['handleShowTaskCreateModal']"
-          @handleShowTaskEditModal="$listeners['handleShowTaskEditModal']"
-          @handleDeleteTask="$listeners['handleDeleteTask']"
         >
         </TaskItem>
       </template>

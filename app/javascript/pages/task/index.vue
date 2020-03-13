@@ -3,9 +3,6 @@
     <div class="row">
       <TaskList :tasks="todoTasks"
         @handleShowTaskDetailModal="handleShowTaskDetailModal"
-        @handleShowTaskCreateModal="handleShowTaskCreateModal"
-        @handleShowTaskEditModal="handleShowTaskEditModal"
-        @handleDeleteTask="handleDeleteTask"
         taskListId="todo-list"
       >
         <template v-slot:header>
@@ -14,9 +11,6 @@
       </TaskList>
       <TaskList :tasks="doneTasks"
         @handleShowTaskDetailModal="handleShowTaskDetailModal"
-        @handleShowTaskCreateModal="handleShowTaskCreateModal"
-        @handleShowTaskEditModal="handleShowTaskEditModal"
-        @handleDeleteTask="handleDeleteTask"
         taskListId="done-list"
       >
         <template v-slot:header>
