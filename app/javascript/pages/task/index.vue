@@ -85,7 +85,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["tasks"]),
+    ...mapGetters("tasks", ["tasks"]),
     todoTasks() {
       return this.tasks.filter(task => {
         return task.status == "todo"
@@ -106,7 +106,7 @@ export default {
     this.fetchTasks();
   },
   methods: {
-    ...mapActions([
+    ...mapActions("tasks", [
       "fetchTasks",
       "createTask",
       "deleteTask",
