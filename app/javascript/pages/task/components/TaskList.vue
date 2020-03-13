@@ -3,7 +3,7 @@
     <div :id="taskListId" class="bg-light rounded shadow m-3 p-3">
       <slot name="header">タスク区分</slot>
       <template v-for="task in tasks">
-        <TaskItem :task="task" @handleShowTaskDetailModal="$listeners['handleShowTaskDetailModal']" />
+        <TaskItem :key="task.id" :task="task" @handleShowTaskDetailModal="$listeners['handleShowTaskDetailModal']" />
       </template>
     </div>
   </div>
