@@ -1,9 +1,9 @@
 <template>
   <div
-          :key="task.id"
-          :id="'task-' + task.id"
-          class="bg-white border shadow-sm rounded my-2 p-4 d-flex align-items-center"
-          @click="handleShowTaskDetailModal(task)"
+    :key="task.id"
+    :id="'task-' + task.id"
+    class="bg-white border shadow-sm rounded my-2 p-4 d-flex align-items-center"
+    @click="handleShowTaskDetailModal(task)"
   >
     <div class="col-8">
       <span>{{ task.title }}</span>
@@ -17,7 +17,7 @@
 
 <script>
   export default {
-    name: "Task",
+    name: "TaskItem",
     props: {
       task: {
         type: Object,

@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      <task-list :tasks="todoTasks"
+      <TaskList :tasks="todoTasks"
         @handleShowTaskDetailModal="handleShowTaskDetailModal"
         @handleShowTaskCreateModal="handleShowTaskCreateModal"
         @handleShowTaskEditModal="handleShowTaskEditModal"
@@ -11,8 +11,8 @@
         <template v-slot:header>
           <div class="h4">TODO</div>
         </template>
-      </task-list>
-      <task-list :tasks="doneTasks"
+      </TaskList>
+      <TaskList :tasks="doneTasks"
         @handleShowTaskDetailModal="handleShowTaskDetailModal"
         @handleShowTaskCreateModal="handleShowTaskCreateModal"
         @handleShowTaskEditModal="handleShowTaskEditModal"
@@ -22,7 +22,7 @@
         <template v-slot:header>
           <div class="h4">DONE</div>
         </template>
-      </task-list>
+      </TaskList>
     </div>
     <div class="text-center">
       <button class="btn btn-secondary" @click="handleShowTaskCreateModal">タスクを追加</button>
