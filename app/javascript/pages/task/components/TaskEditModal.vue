@@ -70,6 +70,8 @@ export default {
   name: "TaskEditModal",
   props: {
     task: {
+      type: Object,
+      required: true,
       id: {
         type: Number,
         required: true

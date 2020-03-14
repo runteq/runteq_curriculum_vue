@@ -59,6 +59,8 @@ export default {
   name: "TaskDetailModal",
   props: {
     task: {
+      type: Object,
+      required: true,
       id: {
         type: Number,
         required: true
