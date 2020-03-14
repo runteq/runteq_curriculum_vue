@@ -60,7 +60,13 @@ export default {
   },
   methods: {
     register() {
-      console.log('register')
+      this.$axios.post('users', { user: this.user })
+        .then(res => {
+          this.$router.push({ name: 'LoginIndex' })
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 }
