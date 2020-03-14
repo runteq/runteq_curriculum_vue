@@ -40,7 +40,7 @@ export default {
     login() {
       this.$axios.post('sessions', this.user)
         .then(res => {
-          console.log(res)
+          this.$router.push({ name: 'TaskIndex' })
         })
         .catch(err => {
           console.log(err)
