@@ -6,6 +6,7 @@ const state = {
 
 const getters =  {
   user: state => state.user,
+  isAuthenticated: state => Object.keys(state.user).length > 0
 }
 
 const mutations = {
@@ -24,6 +25,12 @@ const actions = {
     // ログインユーザー情報の取得
     const userResponse = await axios.get('users/me')
     commit('setUser', userResponse.data)
+  },
+  logoutUser({ commit }) {
+    // ログアウト
+    localStorage.removeItem('auth_token')
+    axios.defaults.headers.common['Authorization'] = ''
+    commit('setUser', {})
   }
 }
 

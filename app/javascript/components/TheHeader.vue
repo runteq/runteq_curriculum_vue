@@ -3,30 +3,59 @@
     <nav class="navbar navbar-expand navbar-dark bg-dark justify-content-between">
       <span class="navbar-brand mb-0 h1">タスク管理アプリ</span>
       <ul class="navbar-nav">
-        <li class="nav-item active">
-          <router-link
-            :to="{ name: 'RegisterIndex' }"
-            class="nav-link"
-          >
-            ユーザー登録
-          </router-link>
-        </li>
-        <li class="nav-item active">
-          <router-link
-            :to="{ name: 'LoginIndex' }"
-            class="nav-link"
-          >
-            ログイン
-          </router-link>
-        </li>
+        <template v-if="!isAuthenticated">
+          <li class="nav-item active">
+            <router-link
+              :to="{ name: 'RegisterIndex' }"
+              class="nav-link"
+            >
+              ユーザー登録
+            </router-link>
+          </li>
+          <li class="nav-item active">
+            <router-link
+              :to="{ name: 'LoginIndex' }"
+              class="nav-link"
+            >
+              ログイン
+            </router-link>
+          </li>
+        </template>
+        <template v-else>
+          <li class="nav-item active">
+            <router-link
+              to="#"
+              @click.native="handleLogout"
+              class="nav-link"
+            >
+              ログアウト
+            </router-link>
+          </li>
+        </template>
       </ul>
     </nav>
   </header>
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex"
+
 export default {
-  name: "TheHeader"
+  name: "TheHeader",
+  computed: {
+    ...mapGetters("users", ["isAuthenticated"])
+  },
+  methods: {
+    ...mapActions("users", ["logoutUser"]),
+    async handleLogout() {
+      try {
+        await this.logoutUser()
+        this.$router.push({name: 'TopIndex'})
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
 }
 </script>
 
