@@ -1,27 +1,35 @@
 <template>
   <div class="container w-50 text-center">
-    <div class="h3 mb-3">ログイン</div>
+    <div class="h3 mb-3">
+      ログイン
+    </div>
     <div class="form-group text-left">
       <label for="email">メールアドレス</label>
       <input
+        id="email"
+        v-model="user.email"
         type="email"
         class="form-control"
-        id="email"
         placeholder="test@example.com"
-        v-model="user.email"
       >
     </div>
     <div class="form-group text-left">
       <label for="password">パスワード</label>
       <input
+        id="password"
+        v-model="user.password"
         type="password"
         class="form-control"
-        id="password"
         placeholder="password"
-        v-model="user.password"
       >
     </div>
-    <button type="submit" class="btn btn-primary" @click="login">ログイン</button>
+    <button
+      type="submit"
+      class="btn btn-primary"
+      @click="login"
+    >
+      ログイン
+    </button>
   </div>
 </template>
 

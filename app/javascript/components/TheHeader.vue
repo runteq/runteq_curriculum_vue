@@ -25,8 +25,8 @@
           <li class="nav-item active">
             <router-link
               to="#"
-              @click.native="handleLogout"
               class="nav-link"
+              @click.native="handleLogout"
             >
               ログアウト
             </router-link>
