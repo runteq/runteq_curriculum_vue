@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
+import store from '../store'
 
 import TopIndex from "../pages/top/index";
 import TaskIndex from "../pages/task/index";
@@ -21,6 +22,7 @@ const router = new Router({
       path: "/tasks",
       component: TaskIndex,
       name: "TaskIndex",
+      meta: { requiredAuth: true },
     },
     {
       path: "/register",
@@ -34,5 +36,13 @@ const router = new Router({
     },
   ],
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiredAuth) && !store.getters['users/isAuthenticated']) {
+    next({ name: 'LoginIndex' });
+  } else {
+    next();
+  }
+});
 
 export default router
