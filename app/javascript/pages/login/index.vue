@@ -26,29 +26,30 @@
 </template>
 
 <script>
+import { mapActions } from "vuex"
+
 export default {
   name: "LoginIndex",
   data() {
     return {
       user: {
-        email: '',
-        password: '',
+        email: "",
+        password: "",
       }
     }
   },
   methods: {
-    login() {
-      this.$axios.post('sessions', this.user)
-        .then(res => {
-          // TODO:サーバ側はAuthorizationヘッダーで認証トークンを受け付けているはずなのでcookieの記述はコメントアウトしておく
-          //document.cookie = `auth_token=${res.data.token}; max-age=${14*24*60*60}`
-          localStorage.auth_token = res.data.token
-          this.$axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.auth_token}`
-          this.$router.push({ name: 'TaskIndex' })
-        })
-        .catch(err => {
-          console.log(err)
-        })
+    ...mapActions("users", [
+      "loginUser",
+      "fetchUser",
+    ]),
+    async login() {
+      try {
+        await this.loginUser(this.user);
+        this.$router.push({ name: 'TaskIndex' })
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 }
