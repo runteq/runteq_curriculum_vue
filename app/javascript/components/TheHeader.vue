@@ -12,7 +12,12 @@
           </router-link>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="#">ログイン</a>
+          <router-link
+            :to="{ name: 'LoginIndex' }"
+            class="nav-link"
+          >
+            ログイン
+          </router-link>
         </li>
       </ul>
     </nav>
