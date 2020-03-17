@@ -40,6 +40,10 @@ export default {
     login() {
       this.$axios.post('sessions', this.user)
         .then(res => {
+          // TODO:サーバ側はAuthorizationヘッダーで認証トークンを受け付けているはずなのでcookieの記述はコメントアウトしておく
+          //document.cookie = `auth_token=${res.data.token}; max-age=${14*24*60*60}`
+          localStorage.auth_token = res.data.token
+          this.$axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.auth_token}`
           this.$router.push({ name: 'TaskIndex' })
         })
         .catch(err => {
