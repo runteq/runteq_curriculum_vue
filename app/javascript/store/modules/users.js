@@ -1,17 +1,17 @@
 import axios from '../../plugins/axios'
 
 const state = {
-  user: {}
+  authUser: {}
 }
 
 const getters =  {
-  user: state => state.user,
-  isAuthenticated: state => Object.keys(state.user).length > 0
+  authUser: state => state.authUser,
+  isAuthenticated: state => Object.keys(state.authUser).length > 0
 }
 
 const mutations = {
   setUser: (state, user) => {
-    state.user = user
+    state.authUser = user
   },
 }
 
