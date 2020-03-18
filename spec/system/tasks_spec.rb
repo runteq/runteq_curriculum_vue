@@ -4,7 +4,7 @@ RSpec.describe 'タスク管理', type: :system do
     visit root_path
     expect(page).to have_content('はじめる'), 'トップページにはじめるボタンが表示されていません'
   end
-
+=begin 課題10からは認証が加わるのでコメントアウト
   it 'タスクページに戻るボタンが表示されている' do
     visit '/tasks'
     expect(page).to have_content('戻る'), 'タスクページに戻るボタンが表示されていません'
@@ -191,6 +191,112 @@ RSpec.describe 'タスク管理', type: :system do
     within "#done-list" do
       expect(page).to have_content('JavaScriptのfor文とif文を理解する'), 'DONEに更新したタスクがDONEタスクリストに表示されていません'
     end
+  end
+=end
+  it '未ログイン状態でヘッダーに「ユーザー登録」、「ログイン」ボタンが表示されている' do
+    visit root_path
+    expect(page).to have_content('ユーザー登録'), '未ログイン状態でヘッダーに「ユーザー登録」ボタンが表示されていません'
+    expect(page).to have_content('ログイン'), '未ログイン状態でヘッダーに「ログイン」ボタンが表示されていません'
+  end
+
+  it 'ユーザー登録ページで各フィールドを入力して「登録」をクリックしたらユーザーが登録されている' do
+    visit root_path
+    click_link 'ユーザー登録'
+    fill_in 'ユーザー名', with: 'test'
+    fill_in 'メールアドレス', with: 'test@example.com'
+    fill_in 'パスワード', with: 'password'
+    fill_in 'パスワード（確認）', with: 'password'
+    click_button '登録'
+    sleep 0.5
+    expect(current_path).to eq('/login'), 'ログインページに遷移できていません'
+  end
+
+  it '登録済みユーザーでログインできる' do
+    visit root_path
+    click_link 'ユーザー登録'
+    fill_in 'ユーザー名', with: 'test'
+    fill_in 'メールアドレス', with: 'test@example.com'
+    fill_in 'パスワード', with: 'password'
+    fill_in 'パスワード（確認）', with: 'password'
+    click_button '登録'
+    sleep 0.5
+    expect(current_path).to eq('/login'), 'ログインページに遷移できていません'
+    fill_in 'メールアドレス', with: 'test@example.com'
+    fill_in 'パスワード', with: 'password'
+    click_button 'ログイン'
+    sleep 0.5
+    expect(current_path).to eq('/tasks'), 'タスクページに遷移できていません'
+  end
+
+  it 'ログイン状態でログアウトできる' do
+    visit root_path
+    click_link 'ユーザー登録'
+    fill_in 'ユーザー名', with: 'test'
+    fill_in 'メールアドレス', with: 'test@example.com'
+    fill_in 'パスワード', with: 'password'
+    fill_in 'パスワード（確認）', with: 'password'
+    click_button '登録'
+    sleep 0.5
+    expect(current_path).to eq('/login'), 'ログインページに遷移できていません'
+    fill_in 'メールアドレス', with: 'test@example.com'
+    fill_in 'パスワード', with: 'password'
+    click_button 'ログイン'
+    sleep 0.5
+    expect(current_path).to eq('/tasks'), 'タスクページに遷移できていません'
+    expect(page).to have_content('ログアウト'), 'ログイン状態でヘッダーに「ログアウト」ボタンが表示されていません'
+    click_link 'ログアウト'
+    sleep 0.5
+    expect(current_path).to eq('/'), 'トップページに遷移できていません'
+  end
+
+  it '未ログイン状態でタスクページに遷移したら、ログインページにリダイレクトされる' do
+    visit root_path
+    click_link 'はじめる'
+    expect(current_path).to eq('/login'), 'ログインページに遷移できていません'
+  end
+
+  it 'ログイン状態でタスクページに遷移したら、タスクページが表示される' do
+    visit root_path
+    click_link 'ユーザー登録'
+    fill_in 'ユーザー名', with: 'test'
+    fill_in 'メールアドレス', with: 'test@example.com'
+    fill_in 'パスワード', with: 'password'
+    fill_in 'パスワード（確認）', with: 'password'
+    click_button '登録'
+    sleep 0.5
+    expect(current_path).to eq('/login'), 'ログインページに遷移できていません'
+    fill_in 'メールアドレス', with: 'test@example.com'
+    fill_in 'パスワード', with: 'password'
+    click_button 'ログイン'
+    sleep 0.5
+    click_link '戻る'
+    expect(current_path).to eq('/'), 'トップページに遷移できていません'
+    click_link 'はじめる'
+    expect(current_path).to eq('/tasks'), 'タスクページに遷移できていません'
+  end
+
+  it 'ログイン状態でタイトルと説明文とステータスを入力して「追加」をクリックしたら新しいタスクが追加されている' do
+    visit root_path
+    click_link 'ユーザー登録'
+    fill_in 'ユーザー名', with: 'test'
+    fill_in 'メールアドレス', with: 'test@example.com'
+    fill_in 'パスワード', with: 'password'
+    fill_in 'パスワード（確認）', with: 'password'
+    click_button '登録'
+    sleep 0.5
+    expect(current_path).to eq('/login'), 'ログインページに遷移できていません'
+    fill_in 'メールアドレス', with: 'test@example.com'
+    fill_in 'パスワード', with: 'password'
+    click_button 'ログイン'
+    sleep 0.5
+    expect(current_path).to eq('/tasks'), 'タスクページに遷移できていません'
+    click_button('タスクを追加')
+    fill_in 'タイトル', with: 'JSを勉強する'
+    fill_in '説明文', with: 'ES6完全に理解する'
+    select 'TODO', from: 'ステータス'
+    click_on '追加'
+    expect(page).to_not have_selector('#task-create-modal'), 'タスク追加モーダルが閉じられていません'
+    expect(page).to have_content('JSを勉強する'), '新規追加したタスクが画面に表示されていません'
   end
 end
 
