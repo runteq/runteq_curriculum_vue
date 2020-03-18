@@ -1,17 +1,23 @@
 import axios from '../../plugins/axios'
 
 const state = {
-  authUser: {}
+  authUser: {},
+  authToken: null,
 }
 
 const getters =  {
   authUser: state => state.authUser,
-  isAuthenticated: state => Object.keys(state.authUser).length > 0
+  isAuthenticated: state => {
+    return state.authToken != null || localStorage.auth_token != null
+  }
 }
 
 const mutations = {
   setUser: (state, user) => {
     state.authUser = user
+  },
+  setToken: (state, token) => {
+    state.authToken = token
   },
 }
 
@@ -21,6 +27,7 @@ const actions = {
     const sessionsResponse = await axios.post('sessions', user)
     localStorage.auth_token = sessionsResponse.data.token
     axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.auth_token}`
+    commit('setToken', sessionsResponse.data.token)
 
     // ログインユーザー情報の取得
     const userResponse = await axios.get('users/me')
@@ -30,6 +37,7 @@ const actions = {
     // ログアウト
     localStorage.removeItem('auth_token')
     axios.defaults.headers.common['Authorization'] = ''
+    commit('setToken', null)
     commit('setUser', {})
   }
 }
