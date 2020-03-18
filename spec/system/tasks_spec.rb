@@ -298,5 +298,53 @@ RSpec.describe 'タスク管理', type: :system do
     expect(page).to_not have_selector('#task-create-modal'), 'タスク追加モーダルが閉じられていません'
     expect(page).to have_content('JSを勉強する'), '新規追加したタスクが画面に表示されていません'
   end
+
+  it '他人のタスク詳細モーダルには「編集」と「削除」ボタンが表示されない。自分のタスクには表示される' do
+    # 他人のタスクを作る
+    visit 'register'
+    fill_in 'ユーザー名', with: 'others'
+    fill_in 'メールアドレス', with: 'others@example.com'
+    fill_in 'パスワード', with: 'password'
+    fill_in 'パスワード（確認）', with: 'password'
+    click_button '登録'
+    fill_in 'メールアドレス', with: 'others@example.com'
+    fill_in 'パスワード', with: 'password'
+    click_button 'ログイン'
+    click_button('タスクを追加')
+    fill_in 'タイトル', with: '他人のタスク'
+    select 'TODO', from: 'ステータス'
+    click_on '追加'
+    expect(page).to have_content('他人のタスク'), '新規追加したタスクが画面に表示されていません'
+    click_link 'ログアウト'
+    # 自分のタスクを作る
+    click_link 'ユーザー登録'
+    fill_in 'ユーザー名', with: 'myself'
+    fill_in 'メールアドレス', with: 'myself@example.com'
+    fill_in 'パスワード', with: 'password'
+    fill_in 'パスワード（確認）', with: 'password'
+    click_button '登録'
+    fill_in 'メールアドレス', with: 'myself@example.com'
+    fill_in 'パスワード', with: 'password'
+    click_button 'ログイン'
+    click_button('タスクを追加')
+    fill_in 'タイトル', with: '自分のタスク'
+    select 'TODO', from: 'ステータス'
+    click_on '追加'
+    expect(page).to have_content('自分のタスク'), '新規追加したタスクが画面に表示されていません'
+    # 他人のタスク詳細モーダルを表示する
+    others_link = find('span', text: '他人のタスク')
+    others_link.click
+    sleep 0.5
+    expect(page).to_not have_content('編集'), '他人のタスクに編集ボタンが表示されています'
+    expect(page).to_not have_content('削除'), '他人のタスクに削除ボタンが表示されています'
+    click_on '閉じる'
+    # 自分のタスク詳細モーダルを表示する
+    others_link = find('span', text: '自分のタスク')
+    others_link.click
+    sleep 0.5
+    expect(page).to have_content('編集'), '自分のタスクに編集ボタンが表示されていません'
+    expect(page).to have_content('削除'), '自分のタスクに削除ボタンが表示されていません'
+    click_on '閉じる'
+  end
 end
 
