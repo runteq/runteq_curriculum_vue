@@ -7,7 +7,7 @@ class Api::SessionsController < ApplicationController
 
       render json: { token: token }
     else
-      render head: :unauthorized
+      head :unauthorized
     end
   end
 end
