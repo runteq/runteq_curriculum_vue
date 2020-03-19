@@ -3,53 +3,71 @@
     <div class="h3 mb-3">
       ユーザー登録
     </div>
-    <div class="form-group text-left">
-      <label for="name">ユーザー名</label>
-      <input
-        id="name"
-        v-model="user.name"
-        type="text"
-        class="form-control"
-        placeholder="username"
+    <ValidationObserver v-slot="{ handleSubmit }">
+      <div class="form-group text-left">
+        <ValidationProvider rules="required" v-slot="{ errors }">
+          <label for="name">ユーザー名</label>
+          <input
+            id="name"
+            name="ユーザー名"
+            v-model="user.name"
+            type="text"
+            class="form-control"
+            placeholder="username"
+          >
+          <span class="text-danger">{{ errors[0] }}</span>
+        </ValidationProvider>
+      </div>
+      <div class="form-group text-left">
+        <ValidationProvider rules="required|email" v-slot="{ errors }">
+          <label for="email">メールアドレス</label>
+          <input
+            id="email"
+            name="メールアドレス"
+            v-model="user.email"
+            type="email"
+            class="form-control"
+            placeholder="test@example.com"
+          >
+          <span class="text-danger">{{ errors[0] }}</span>
+        </ValidationProvider>
+      </div>
+      <div class="form-group text-left">
+        <ValidationProvider rules="required" v-slot="{ errors }" vid="password">
+          <label for="password">パスワード</label>
+          <input
+            id="password"
+            name="パスワード"
+            v-model="user.password"
+            type="password"
+            class="form-control"
+            placeholder="password"
+          >
+          <span class="text-danger">{{ errors[0] }}</span>
+        </ValidationProvider>
+      </div>
+      <div class="form-group text-left">
+        <ValidationProvider rules="required|min:3|password_confirmed:@password" v-slot="{ errors }">
+          <label for="password_confirmation">パスワード（確認）</label>
+          <input
+            id="password_confirmation"
+            name="パスワード（確認）"
+            v-model="user.password_confirmation"
+            type="password"
+            class="form-control"
+            placeholder="password"
+          >
+          <span class="text-danger">{{ errors[0] }}</span>
+        </ValidationProvider>
+      </div>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        @click="handleSubmit(register)"
       >
-    </div>
-    <div class="form-group text-left">
-      <label for="email">メールアドレス</label>
-      <input
-        id="email"
-        v-model="user.email"
-        type="email"
-        class="form-control"
-        placeholder="test@example.com"
-      >
-    </div>
-    <div class="form-group text-left">
-      <label for="password">パスワード</label>
-      <input
-        id="password"
-        v-model="user.password"
-        type="password"
-        class="form-control"
-        placeholder="password"
-      >
-    </div>
-    <div class="form-group text-left">
-      <label for="password_confirmation">パスワード（確認）</label>
-      <input
-        id="password_confirmation"
-        v-model="user.password_confirmation"
-        type="password"
-        class="form-control"
-        placeholder="password"
-      >
-    </div>
-    <button
-      type="submit"
-      class="btn btn-primary"
-      @click="register"
-    >
-      登録
-    </button>
+        登録
+      </button>
+    </ValidationObserver>
   </div>
 </template>
 
