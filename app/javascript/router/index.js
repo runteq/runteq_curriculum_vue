@@ -38,11 +38,13 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiredAuth) && !store.getters['users/isAuthenticated']) {
-    next({ name: 'LoginIndex' });
-  } else {
-    next();
-  }
+  store.dispatch('users/fetchAuthUser').then((authUser) => {
+    if (to.matched.some(record => record.meta.requiredAuth) && !authUser) {
+      next({ name: 'LoginIndex' });
+    } else {
+      next();
+    }
+  })
 });
 
 export default router

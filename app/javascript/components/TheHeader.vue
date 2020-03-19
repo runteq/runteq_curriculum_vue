@@ -3,7 +3,7 @@
     <nav class="navbar navbar-expand navbar-dark bg-dark justify-content-between">
       <span class="navbar-brand mb-0 h1">タスク管理アプリ</span>
       <ul class="navbar-nav">
-        <template v-if="!isAuthenticated">
+        <template v-if="!authUser">
           <li class="nav-item active">
             <router-link
               :to="{ name: 'RegisterIndex' }"
@@ -43,7 +43,7 @@ import { mapGetters, mapActions } from "vuex"
 export default {
   name: "TheHeader",
   computed: {
-    ...mapGetters("users", ["isAuthenticated"])
+    ...mapGetters("users", ["authUser"])
   },
   methods: {
     ...mapActions("users", ["logoutUser"]),
