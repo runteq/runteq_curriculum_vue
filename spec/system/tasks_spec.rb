@@ -1,5 +1,7 @@
 require 'rails_helper'
 RSpec.describe 'タスク管理', type: :system do
+  let(:user) { create(:user) }
+  let(:other_user) { create(:user) }
   it 'トップページにはじめるボタンが表示されている' do
     visit root_path
     expect(page).to have_content('はじめる'), 'トップページにはじめるボタンが表示されていません'
@@ -193,104 +195,9 @@ RSpec.describe 'タスク管理', type: :system do
     end
   end
 =end
-  it '未ログイン状態でヘッダーに「ユーザー登録」、「ログイン」ボタンが表示されている' do
-    visit root_path
-    expect(page).to have_content('ユーザー登録'), '未ログイン状態でヘッダーに「ユーザー登録」ボタンが表示されていません'
-    expect(page).to have_content('ログイン'), '未ログイン状態でヘッダーに「ログイン」ボタンが表示されていません'
-  end
-
-  it 'ユーザー登録ページで各フィールドを入力して「登録」をクリックしたらユーザーが登録されている' do
-    visit root_path
-    click_link 'ユーザー登録'
-    fill_in 'ユーザー名', with: 'test'
-    fill_in 'メールアドレス', with: 'test@example.com'
-    fill_in 'パスワード', with: 'password'
-    fill_in 'パスワード（確認）', with: 'password'
-    click_button '登録'
-    sleep 0.5
-    expect(current_path).to eq('/login'), 'ログインページに遷移できていません'
-  end
-
-  it '登録済みユーザーでログインできる' do
-    visit root_path
-    click_link 'ユーザー登録'
-    fill_in 'ユーザー名', with: 'test'
-    fill_in 'メールアドレス', with: 'test@example.com'
-    fill_in 'パスワード', with: 'password'
-    fill_in 'パスワード（確認）', with: 'password'
-    click_button '登録'
-    sleep 0.5
-    expect(current_path).to eq('/login'), 'ログインページに遷移できていません'
-    fill_in 'メールアドレス', with: 'test@example.com'
-    fill_in 'パスワード', with: 'password'
-    click_button 'ログイン'
-    sleep 0.5
-    expect(current_path).to eq('/tasks'), 'タスクページに遷移できていません'
-  end
-
-  it 'ログイン状態でログアウトできる' do
-    visit root_path
-    click_link 'ユーザー登録'
-    fill_in 'ユーザー名', with: 'test'
-    fill_in 'メールアドレス', with: 'test@example.com'
-    fill_in 'パスワード', with: 'password'
-    fill_in 'パスワード（確認）', with: 'password'
-    click_button '登録'
-    sleep 0.5
-    expect(current_path).to eq('/login'), 'ログインページに遷移できていません'
-    fill_in 'メールアドレス', with: 'test@example.com'
-    fill_in 'パスワード', with: 'password'
-    click_button 'ログイン'
-    sleep 0.5
-    expect(current_path).to eq('/tasks'), 'タスクページに遷移できていません'
-    expect(page).to have_content('ログアウト'), 'ログイン状態でヘッダーに「ログアウト」ボタンが表示されていません'
-    click_link 'ログアウト'
-    sleep 0.5
-    expect(current_path).to eq('/'), 'トップページに遷移できていません'
-  end
-
-  it '未ログイン状態でタスクページに遷移したら、ログインページにリダイレクトされる' do
-    visit root_path
-    click_link 'はじめる'
-    expect(current_path).to eq('/login'), 'ログインページに遷移できていません'
-  end
-
-  it 'ログイン状態でタスクページに遷移したら、タスクページが表示される' do
-    visit root_path
-    click_link 'ユーザー登録'
-    fill_in 'ユーザー名', with: 'test'
-    fill_in 'メールアドレス', with: 'test@example.com'
-    fill_in 'パスワード', with: 'password'
-    fill_in 'パスワード（確認）', with: 'password'
-    click_button '登録'
-    sleep 0.5
-    expect(current_path).to eq('/login'), 'ログインページに遷移できていません'
-    fill_in 'メールアドレス', with: 'test@example.com'
-    fill_in 'パスワード', with: 'password'
-    click_button 'ログイン'
-    sleep 0.5
-    click_link '戻る'
-    expect(current_path).to eq('/'), 'トップページに遷移できていません'
-    click_link 'はじめる'
-    expect(current_path).to eq('/tasks'), 'タスクページに遷移できていません'
-  end
-
   it 'ログイン状態でタイトルと説明文とステータスを入力して「追加」をクリックしたら新しいタスクが追加されている' do
-    visit root_path
-    click_link 'ユーザー登録'
-    fill_in 'ユーザー名', with: 'test'
-    fill_in 'メールアドレス', with: 'test@example.com'
-    fill_in 'パスワード', with: 'password'
-    fill_in 'パスワード（確認）', with: 'password'
-    click_button '登録'
-    sleep 0.5
-    expect(current_path).to eq('/login'), 'ログインページに遷移できていません'
-    fill_in 'メールアドレス', with: 'test@example.com'
-    fill_in 'パスワード', with: 'password'
-    click_button 'ログイン'
-    sleep 0.5
-    expect(current_path).to eq('/tasks'), 'タスクページに遷移できていません'
-    click_button('タスクを追加')
+    login_as(user)
+    click_on('タスクを追加')
     fill_in 'タイトル', with: 'JSを勉強する'
     fill_in '説明文', with: 'ES6完全に理解する'
     select 'TODO', from: 'ステータス'
@@ -299,52 +206,22 @@ RSpec.describe 'タスク管理', type: :system do
     expect(page).to have_content('JSを勉強する'), '新規追加したタスクが画面に表示されていません'
   end
 
-  it '他人のタスク詳細モーダルには「編集」と「削除」ボタンが表示されない。自分のタスクには表示される' do
-    # 他人のタスクを作る
-    visit 'register'
-    fill_in 'ユーザー名', with: 'others'
-    fill_in 'メールアドレス', with: 'others@example.com'
-    fill_in 'パスワード', with: 'password'
-    fill_in 'パスワード（確認）', with: 'password'
-    click_button '登録'
-    fill_in 'メールアドレス', with: 'others@example.com'
-    fill_in 'パスワード', with: 'password'
-    click_button 'ログイン'
-    click_button('タスクを追加')
-    fill_in 'タイトル', with: '他人のタスク'
-    select 'TODO', from: 'ステータス'
-    click_on '追加'
-    expect(page).to have_content('他人のタスク'), '新規追加したタスクが画面に表示されていません'
-    click_link 'ログアウト'
-    # 自分のタスクを作る
-    click_link 'ユーザー登録'
-    fill_in 'ユーザー名', with: 'myself'
-    fill_in 'メールアドレス', with: 'myself@example.com'
-    fill_in 'パスワード', with: 'password'
-    fill_in 'パスワード（確認）', with: 'password'
-    click_button '登録'
-    fill_in 'メールアドレス', with: 'myself@example.com'
-    fill_in 'パスワード', with: 'password'
-    click_button 'ログイン'
-    click_button('タスクを追加')
-    fill_in 'タイトル', with: '自分のタスク'
-    select 'TODO', from: 'ステータス'
-    click_on '追加'
-    expect(page).to have_content('自分のタスク'), '新規追加したタスクが画面に表示されていません'
+  it '他人のタスク詳細モーダルには「編集」と「削除」ボタンが表示されない。' do
+    others_task = create(:task, title: '他人のタスク', user: other_user)
+    login_as(user)
     # 他人のタスク詳細モーダルを表示する
-    others_link = find('span', text: '他人のタスク')
-    others_link.click
-    sleep 0.5
+    find("#task-#{others_task.id}").click
     expect(page).to_not have_content('編集'), '他人のタスクに編集ボタンが表示されています'
     expect(page).to_not have_content('削除'), '他人のタスクに削除ボタンが表示されています'
-    click_on '閉じる'
+  end
+
+  it '自分のタスクには「編集」と「削除」ボタンが表示される' do
+    my_task = create(:task, title: '自分のタスク', user: user)
+    login_as(user)
     # 自分のタスク詳細モーダルを表示する
-    others_link = find('span', text: '自分のタスク')
-    others_link.click
-    sleep 0.5
+    find("#task-#{my_task.id}").click
     expect(page).to have_content('編集'), '自分のタスクに編集ボタンが表示されていません'
     expect(page).to have_content('削除'), '自分のタスクに削除ボタンが表示されていません'
-    click_on '閉じる'
   end
 end
 

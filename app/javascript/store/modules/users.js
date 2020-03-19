@@ -1,24 +1,17 @@
 import axios from '../../plugins/axios'
 
 const state = {
-  authUser: {},
-  authToken: null,
+  authUser: null
 }
 
 const getters =  {
-  authUser: state => state.authUser,
-  isAuthenticated: state => {
-    return state.authToken != null || localStorage.auth_token != null
-  }
+  authUser: state => state.authUser
 }
 
 const mutations = {
   setUser: (state, user) => {
     state.authUser = user
-  },
-  setToken: (state, token) => {
-    state.authToken = token
-  },
+  }
 }
 
 const actions = {
@@ -27,7 +20,6 @@ const actions = {
     const sessionsResponse = await axios.post('sessions', user)
     localStorage.auth_token = sessionsResponse.data.token
     axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.auth_token}`
-    commit('setToken', sessionsResponse.data.token)
 
     // ログインユーザー情報の取得
     const userResponse = await axios.get('users/me')
@@ -37,8 +29,26 @@ const actions = {
     // ログアウト
     localStorage.removeItem('auth_token')
     axios.defaults.headers.common['Authorization'] = ''
-    commit('setToken', null)
-    commit('setUser', {})
+    commit('setUser', null)
+  },
+  async fetchAuthUser({ commit, state }) {
+    if (!localStorage.auth_token) return null
+    if (state.authUser) return state.authUser
+
+    const userResponse = await axios.get('users/me')
+      .catch((err) => {
+        return null
+      })
+    if (!userResponse) return null
+
+    const authUser = userResponse.data
+    if (authUser) {
+      commit('setUser', authUser)
+      return authUser
+    } else {
+      commit('setUser', null)
+      return null
+    }
   }
 }
 
