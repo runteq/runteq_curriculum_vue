@@ -30,6 +30,14 @@ extend('min', {
   message: '{_field_}は{length}文字以上で入力してください'
 });
 
+extend('max', {
+  validate(value, { length }) {
+    return value.length <= length;
+  },
+  params: ['length'],
+  message: '{_field_}は{length}文字以下で入力してください'
+});
+
 extend('password_confirmed', {
   params: ['target'],
   validate(value, { target }) {
