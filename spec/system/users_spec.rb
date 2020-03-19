@@ -11,19 +11,23 @@ RSpec.describe 'ユーザー機能', type: :system do
   it 'ユーザー登録ページで各フィールドを入力して「登録」をクリックしたらユーザーが登録されている' do
     visit root_path
     click_link 'ユーザー登録'
-    fill_in 'ユーザー名', with: 'test'
-    fill_in 'メールアドレス', with: 'test@example.com'
-    fill_in 'パスワード', with: 'password'
-    fill_in 'パスワード（確認）', with: 'password'
-    click_on '登録'
+    within "#register-form" do
+      fill_in 'ユーザー名', with: 'test'
+      fill_in 'メールアドレス', with: 'test@example.com'
+      fill_in 'パスワード', with: 'password'
+      fill_in 'パスワード（確認）', with: 'password'
+      click_on '登録'
+    end
     expect(page).to have_current_path('/login'), 'ログインページに遷移できていません'
   end
 
   it '登録済みユーザーでログインできる' do
     visit '/login'
-    fill_in 'メールアドレス', with: user.email
-    fill_in 'パスワード', with: '12345678'
-    click_button 'ログイン'
+    within "#login-form" do
+      fill_in 'メールアドレス', with: user.email
+      fill_in 'パスワード', with: '12345678'
+      click_on 'ログイン'
+    end
     expect(page).to have_current_path('/tasks'), 'タスクページに遷移できていません'
   end
 
