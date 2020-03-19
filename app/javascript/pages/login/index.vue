@@ -1,16 +1,22 @@
 <template>
-  <div id="login-form" class="container w-50 text-center">
+  <div
+    id="login-form"
+    class="container w-50 text-center"
+  >
     <div class="h3 mb-3">
       ログイン
     </div>
     <ValidationObserver v-slot="{ handleSubmit }">
       <div class="form-group text-left">
-        <ValidationProvider rules="required|email" v-slot="{ errors }">
+        <ValidationProvider
+          v-slot="{ errors }"
+          rules="required|email"
+        >
           <label for="email">メールアドレス</label>
           <input
             id="email"
-            name="メールアドレス"
             v-model="user.email"
+            name="メールアドレス"
             type="email"
             class="form-control"
             placeholder="test@example.com"
@@ -19,12 +25,15 @@
         </ValidationProvider>
       </div>
       <div class="form-group text-left">
-        <ValidationProvider rules="required|min:3" v-slot="{ errors }">
+        <ValidationProvider
+          v-slot="{ errors }"
+          rules="required|min:3"
+        >
           <label for="password">パスワード</label>
           <input
             id="password"
-            name="パスワード"
             v-model="user.password"
+            name="パスワード"
             type="password"
             class="form-control"
             placeholder="password"

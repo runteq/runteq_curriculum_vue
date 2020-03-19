@@ -1,16 +1,22 @@
 <template>
-  <div id="register-form" class="container w-50 text-center">
+  <div
+    id="register-form"
+    class="container w-50 text-center"
+  >
     <div class="h3 mb-3">
       ユーザー登録
     </div>
     <ValidationObserver v-slot="{ handleSubmit }">
       <div class="form-group text-left">
-        <ValidationProvider rules="required" v-slot="{ errors }">
+        <ValidationProvider
+          v-slot="{ errors }"
+          rules="required"
+        >
           <label for="name">ユーザー名</label>
           <input
             id="name"
-            name="ユーザー名"
             v-model="user.name"
+            name="ユーザー名"
             type="text"
             class="form-control"
             placeholder="username"
@@ -19,12 +25,15 @@
         </ValidationProvider>
       </div>
       <div class="form-group text-left">
-        <ValidationProvider rules="required|email" v-slot="{ errors }">
+        <ValidationProvider
+          v-slot="{ errors }"
+          rules="required|email"
+        >
           <label for="email">メールアドレス</label>
           <input
             id="email"
-            name="メールアドレス"
             v-model="user.email"
+            name="メールアドレス"
             type="email"
             class="form-control"
             placeholder="test@example.com"
@@ -33,12 +42,16 @@
         </ValidationProvider>
       </div>
       <div class="form-group text-left">
-        <ValidationProvider rules="required" v-slot="{ errors }" vid="password">
+        <ValidationProvider
+          v-slot="{ errors }"
+          rules="required"
+          vid="password"
+        >
           <label for="password">パスワード</label>
           <input
             id="password"
-            name="パスワード"
             v-model="user.password"
+            name="パスワード"
             type="password"
             class="form-control"
             placeholder="password"
@@ -47,12 +60,15 @@
         </ValidationProvider>
       </div>
       <div class="form-group text-left">
-        <ValidationProvider rules="required|min:3|password_confirmed:@password" v-slot="{ errors }">
+        <ValidationProvider
+          v-slot="{ errors }"
+          rules="required|min:3|password_confirmed:@password"
+        >
           <label for="password_confirmation">パスワード（確認）</label>
           <input
             id="password_confirmation"
-            name="パスワード（確認）"
             v-model="user.password_confirmation"
+            name="パスワード（確認）"
             type="password"
             class="form-control"
             placeholder="password"
