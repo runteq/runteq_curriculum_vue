@@ -12,7 +12,7 @@ class Api::TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
 
     if @task.save
       render json: @task
@@ -41,6 +41,6 @@ class Api::TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :description)
+    params.require(:task).permit(:title, :description, :status)
   end
 end

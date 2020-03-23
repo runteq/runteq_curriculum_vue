@@ -1,4 +1,6 @@
 class Api::UsersController < ApplicationController
+  before_action :authenticate!, only: %i[me]
+
   def create
     user = User.new(user_params)
 
@@ -12,6 +14,10 @@ class Api::UsersController < ApplicationController
   def show
     user = User.find(params[:id])
     render json: user, methods: [:avatar_url]
+  end
+
+  def me
+    render json: current_user
   end
 
   private
