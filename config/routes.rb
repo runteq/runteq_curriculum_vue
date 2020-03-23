@@ -9,6 +9,7 @@ Rails.application.routes.draw do
         get 'me'
       end
     end
+    resources :profile
   end
 
   get '*path', to: 'home#index'
