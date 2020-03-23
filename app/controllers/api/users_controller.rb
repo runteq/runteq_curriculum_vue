@@ -11,13 +11,14 @@ class Api::UsersController < ApplicationController
     end
   end
 
+  # TODO: meメソッドで代用可能かもしれないので削除予定
   def show
     user = User.find(params[:id])
     render json: user, methods: [:avatar_url]
   end
 
   def me
-    render json: current_user
+    render json: current_user, methods: [:avatar_url]
   end
 
   private
