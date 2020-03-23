@@ -6,6 +6,7 @@ import TopIndex from "../pages/top/index";
 import TaskIndex from "../pages/task/index";
 import RegisterIndex from "../pages/register/index";
 import LoginIndex from "../pages/login/index";
+import ProfileIndex from "../pages/profile/index";
 
 Vue.use(Router)
 
@@ -33,6 +34,11 @@ const router = new Router({
       path: "/login",
       component: LoginIndex,
       name: "LoginIndex",
+    },
+    {
+      path: "/profile",
+      component: ProfileIndex,
+      name: "ProfileIndex",
     },
   ],
 })

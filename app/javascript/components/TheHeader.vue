@@ -24,6 +24,14 @@
         <template v-else>
           <li class="nav-item active">
             <router-link
+                    :to="{ name: 'ProfileIndex' }"
+                    class="nav-link"
+            >
+              プロフィール
+            </router-link>
+          </li>
+          <li class="nav-item active">
+            <router-link
               to="#"
               class="nav-link"
               @click.native="handleLogout"
