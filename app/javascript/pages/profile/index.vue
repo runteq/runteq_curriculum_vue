@@ -35,6 +35,7 @@
             name="プロフィール画像"
             type="file"
             class="form-control-file"
+            @change="handleChange"
           >
           <span class="text-danger">{{ errors[0] }}</span>
         </ValidationProvider>
@@ -51,14 +52,43 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex"
+
 export default {
   name: "ProfileIndex",
   data() {
     return {
       user: {
-        name: "あああ",
-        avatar_url: "aaaaaaaaaa",
-      }
+        name: "",
+        avatar_url: ""
+      },
+      uploadAvatar: ""
+    }
+  },
+  computed: {
+    ...mapGetters("users", ["authUser"]),
+  },
+  created() {
+    this.fetchUser();
+  },
+  methods: {
+    fetchUser() {
+      this.$axios.get(`users/${this.authUser.id}`)
+        .then(res => this.user = res.data)
+    },
+    handleChange(event) {
+      this.uploadAvatar = event.target.files[0]
+    },
+    update() {
+      const formData = new FormData()
+      formData.append("user[name]", this.user.name)
+      if (this.uploadAvatar) formData.append("user[avatar]", this.uploadAvatar)
+      this.$axios.patch(`profile/${this.authUser.id}`, formData)
+        .then(res => {
+          console.log(res)
+          this.$router.push({ name: "TaskIndex" })
+        })
+        .catch(err => console.log(err))
     }
   }
 }
