@@ -39,6 +39,7 @@ const router = new Router({
       path: "/profile",
       component: ProfileIndex,
       name: "ProfileIndex",
+      meta: { requiredAuth: true },
     },
   ],
 })
