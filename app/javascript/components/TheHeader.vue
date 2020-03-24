@@ -22,7 +22,7 @@
           </li>
         </template>
         <template v-else>
-          <li class="nav-item active">
+          <li class="nav-item active avatar-image-wrapper">
             <img :src="authUser.avatar_url" class="rounded avatar-image">
           </li>
           <li class="nav-item active">
@@ -71,8 +71,10 @@ export default {
 </script>
 
 <style scoped>
+.avatar-image-wrapper {
+  line-height: 40px;
+}
 .avatar-image {
   width: 20px;
-  margin-top: 5px;
 }
 </style>
