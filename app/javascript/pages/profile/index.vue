@@ -80,14 +80,10 @@ export default {
     ...mapGetters("users", ["authUser"]),
   },
   created() {
-    this.fetchUser();
+    this.user = Object.assign({}, this.authUser)
   },
   methods: {
     ...mapActions("users", ["updateUser"]),
-    fetchUser() {
-      this.$axios.get(`users/${this.authUser.id}`)
-        .then(res => this.user = res.data)
-    },
     async handleChange(event) {
       const { valid } = await this.$refs.provider.validate(event)
       if (valid) this.uploadAvatar = event.target.files[0]
