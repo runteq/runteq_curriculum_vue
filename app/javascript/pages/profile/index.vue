@@ -29,7 +29,8 @@
           v-slot="{ errors }"
           rules=""
         >
-          <label for="avatar">プロフィール画像</label>
+          <label for="avatar" class="d-block">プロフィール画像</label>
+          <img :src="user.avatar_url" class="my-3" width="150px">
           <input
             id="avatar"
             name="プロフィール画像"
