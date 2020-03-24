@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex"
+import { mapGetters, mapActions } from "vuex"
 
 export default {
   name: "ProfileIndex",
@@ -80,13 +80,10 @@ export default {
     ...mapGetters("users", ["authUser"]),
   },
   created() {
-    this.fetchUser();
+    this.user = Object.assign({}, this.authUser)
   },
   methods: {
-    fetchUser() {
-      this.$axios.get(`users/${this.authUser.id}`)
-        .then(res => this.user = res.data)
-    },
+    ...mapActions("users", ["updateUser"]),
     async handleChange(event) {
       const { valid } = await this.$refs.provider.validate(event)
       if (valid) this.uploadAvatar = event.target.files[0]
@@ -95,12 +92,14 @@ export default {
       const formData = new FormData()
       formData.append("user[name]", this.user.name)
       if (this.uploadAvatar) formData.append("user[avatar]", this.uploadAvatar)
-      this.$axios.patch(`profile/${this.authUser.id}`, formData)
-        .then(res => {
-          console.log(res)
-          this.$router.push({ name: "TaskIndex" })
-        })
-        .catch(err => console.log(err))
+
+      try {
+        this.updateUser(formData)
+        this.$router.push({ name: "TaskIndex" })
+      } catch (error) {
+        console.log(error);
+      }
+
     }
   }
 }
