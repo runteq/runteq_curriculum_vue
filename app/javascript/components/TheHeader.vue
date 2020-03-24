@@ -24,8 +24,8 @@
         <template v-else>
           <li class="nav-item active">
             <router-link
-                    :to="{ name: 'ProfileIndex' }"
-                    class="nav-link"
+              :to="{ name: 'ProfileIndex' }"
+              class="nav-link"
             >
               プロフィール
             </router-link>

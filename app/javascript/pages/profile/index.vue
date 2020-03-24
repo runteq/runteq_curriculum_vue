@@ -9,17 +9,17 @@
     <ValidationObserver v-slot="{ handleSubmit }">
       <div class="form-group text-left">
         <ValidationProvider
-                v-slot="{ errors }"
-                rules="required"
+          v-slot="{ errors }"
+          rules="required"
         >
           <label for="name">ユーザー名</label>
           <input
-                  id="name"
-                  v-model="user.name"
-                  name="ユーザー名"
-                  type="text"
-                  class="form-control"
-                  placeholder="username"
+            id="name"
+            v-model="user.name"
+            name="ユーザー名"
+            type="text"
+            class="form-control"
+            placeholder="username"
           >
           <span class="text-danger">{{ errors[0] }}</span>
         </ValidationProvider>
@@ -29,8 +29,15 @@
           v-slot="{ errors }"
           rules=""
         >
-          <label for="avatar" class="d-block">プロフィール画像</label>
-          <img :src="user.avatar_url" class="my-3" width="150px">
+          <label
+            for="avatar"
+            class="d-block"
+          >プロフィール画像</label>
+          <img
+            :src="user.avatar_url"
+            class="my-3"
+            width="150px"
+          >
           <input
             id="avatar"
             name="プロフィール画像"
