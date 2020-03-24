@@ -25,12 +25,14 @@
         </ValidationProvider>
       </div>
       <div class="form-group text-left">
+        <!-- eslint-disable vue/no-unused-vars -->
         <ValidationProvider
           v-slot="{ errors, validate }"
           ref="provider"
           name="プロフィール画像"
           rules="image"
         >
+          <!-- eslint-enable vue/no-unused-vars -->
           <label
             for="avatar"
             class="d-block"
