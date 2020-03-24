@@ -23,6 +23,9 @@
         </template>
         <template v-else>
           <li class="nav-item active">
+            <img :src="authUser.avatar_url" class="rounded avatar-image">
+          </li>
+          <li class="nav-item active">
             <router-link
               :to="{ name: 'ProfileIndex' }"
               class="nav-link"
@@ -68,5 +71,8 @@ export default {
 </script>
 
 <style scoped>
-
+.avatar-image {
+  width: 20px;
+  margin-top: 5px;
+}
 </style>
