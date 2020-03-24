@@ -26,8 +26,10 @@
       </div>
       <div class="form-group text-left">
         <ValidationProvider
-          v-slot="{ errors }"
-          rules=""
+          v-slot="{ errors, validate }"
+          ref="provider"
+          name="プロフィール画像"
+          rules="image"
         >
           <label
             for="avatar"
@@ -40,7 +42,6 @@
           >
           <input
             id="avatar"
-            name="プロフィール画像"
             type="file"
             class="form-control-file"
             @change="handleChange"
@@ -84,8 +85,9 @@ export default {
       this.$axios.get(`users/${this.authUser.id}`)
         .then(res => this.user = res.data)
     },
-    handleChange(event) {
-      this.uploadAvatar = event.target.files[0]
+    async handleChange(event) {
+      const { valid } = await this.$refs.provider.validate(event)
+      if (valid) this.uploadAvatar = event.target.files[0]
     },
     update() {
       const formData = new FormData()
