@@ -168,6 +168,7 @@ export default {
     async handleCreateTask(task) {
       try {
         await this.createTask(task);
+        this.resetSearchTask();
         this.handleCloseTaskCreateModal();
       } catch (error) {
         console.log(error);
@@ -184,11 +185,15 @@ export default {
     async handleUpdateTask(task) {
       try {
         await this.updateTask(task);
+        this.resetSearchTask();
         this.handleCloseTaskEditModal();
       } catch (error) {
         console.log(error);
       }
     },
+    resetSearchTask() {
+      this.searchTask = ""
+    }
   }
 }
 </script>
