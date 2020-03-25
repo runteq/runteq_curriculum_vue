@@ -260,5 +260,29 @@ RSpec.describe 'タスク管理', type: :system do
 
     expect(page).to have_selector("#task-edit-modal-#{my_task.id}"), 'バリデーションエラーが発生しているときに画面遷移してはいけません'
   end
+
+  it '検索フォームに入力した文字列を含むタスクのみ画面上に表示されていること' do
+    create(:task, title: 'AAタスク', status: 2, user: user)
+    create(:task, title: 'ABタスク', status: 1, user: user)
+    login_as(user)
+
+    within "#search-form" do
+      fill_in '絞り込み', with: 'A'
+    end
+    expect(page).to have_content('AAタスク'), 'タスクが表示されていません'
+    expect(page).to have_content('ABタスク'), 'タスクが表示されていません'
+
+    within "#search-form" do
+      fill_in '絞り込み', with: 'AA'
+    end
+    expect(page).to have_content('AAタスク'), 'タスクが表示されていません'
+    expect(page).to_not have_content('ABタスク'), 'タスクが表示されています'
+
+    within "#search-form" do
+      fill_in '絞り込み', with: 'AAA'
+    end
+    expect(page).to_not have_content('AAタスク'), 'タスクが表示されています'
+    expect(page).to_not have_content('ABタスク'), 'タスクが表示されています'
+  end
 end
 
