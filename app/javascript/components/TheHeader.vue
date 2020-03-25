@@ -23,7 +23,10 @@
         </template>
         <template v-else>
           <li class="nav-item active avatar-image-wrapper">
-            <img :src="authUser.avatar_url" class="rounded avatar-image">
+            <img
+              :src="authUser.avatar_url"
+              class="rounded avatar-image"
+            >
           </li>
           <li class="nav-item active">
             <router-link
