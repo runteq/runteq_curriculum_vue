@@ -33,3 +33,7 @@ yarn-debug.log*
 
 .idea
 config/database.yml
+
+# Ignore sqlite3 files
+db/runteq_curriculum_vue_development
+db/runteq_curriculum_vue_test
