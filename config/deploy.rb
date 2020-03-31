@@ -88,18 +88,18 @@ namespace :deploy do
     end
   end
 
-  desc 'bundle update sqlite3'
-  namespace :update_sqlite do
-    task :update do
-      on roles(:app) do
-        with rails_env: fetch(:rails_env) do
-          within release_path do
-            execute :bundle, :update, :sqlite3, '--force'
-          end
-        end
-      end
-    end
-  end
+  # desc 'bundle update sqlite3'
+  # namespace :update_sqlite do
+  #   task :update do
+  #     on roles(:app) do
+  #       with rails_env: fetch(:rails_env) do
+  #         within release_path do
+  #           execute :bundle, :update, :sqlite3, '--force'
+  #         end
+  #       end
+  #     end
+  #   end
+  # end
 
   before :starting, :upload
   before 'check:linked_files', 'puma:nginx_config'
@@ -107,4 +107,4 @@ end
 
 after 'deploy:published', 'nginx:restart'
 before 'deploy:migrate', 'deploy:db_create'
-after 'bundler:install', 'deploy:update_sqlite:update'
+# after 'bundler:install', 'deploy:update_sqlite:update'
