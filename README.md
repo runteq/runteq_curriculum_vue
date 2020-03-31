@@ -6,68 +6,51 @@
 
 Railsで作成されたAPIをフロントのVue.jsから呼び出すようなSPA構成のアプリケーション開発の基礎を学ぶことができます。
 
-## Ruby version
+## 使用バージョン
 
-* 2.6.5
-
-## Rails version
-
-* 6.0.2.1
-
-## System dependencies
-
-* MySQL 5.7
-* Node.js >= v12.14.0
-* Yarn >= 1.19.2
-
-## Vue.js version
-
+- Ruby 2.6.5
+- Rails 6.0.2.1
 - Vue.js 2.6.11
+- Node.js v12.13.0 以降
+- Yarn 1.19.2 以降
 
-## Project initiation
+## プロジェクトのセットアップ手順
 
-* Gemのインストール
+ターミナルでgit cloneして作成されたフォルダに移動して、下記のコマンドを実行してください
 
-```
-$ bundle install --path=vendor/bundle
-```
-
-* npmのインストール
-
-```
+- このプロジェクトで使用するライブラリをインストール
+```bash
+$ bundle install --path vendor/bundle
 $ yarn install
 ```
 
-## Configuration
+- データベースの設定を雛形のdefaultファイルをコピーして作成
 
-ファイルの中身はご自身の環境に合わせて適宜変更してください
-
-* データベースの設定
-
-```
+```bash
 $ cp config/database.yml.default config/database.yml
 ```
 
-## Database creation
+- データベースおよびテーブルの作成
 
-```
-$ bundle exec rails db:reset
+```bash
+$ bundle exec rails db:setup
 ```
 
-## Run rails server
+- バックエンド側サーバーの起動
 
-```
+```bash
 $ bundle exec rails server
 ```
 
-## Run rails + webpack dev server
-
+- フロントエンド側サーバーの起動
 ```bash
-$ bundle exec foreman start
+$ bin/webpack-dev-server
 ```
 
-## Run rubocop（auto correct）
+- 以上のコマンドが正しく実行できた場合、ブラウザで`localhost:3000`にアクセスしましょう。
 
+また、`foreman`でもサーバーを起動できるようにしています。
+ 
 ```bash
-$ bundle exec rubocop -a
+$ bundle exec foreman start
 ```
