@@ -99,8 +99,6 @@ GEM
       railties (>= 4.2.0)
     faker (2.10.1)
       i18n (>= 1.6, < 2)
-    faraday (1.0.0)
-      multipart-post (>= 1.2, < 3)
     ffi (1.12.2)
     foreman (0.87.0)
     globalid (0.4.2)
@@ -239,6 +237,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    sqlite3 (1.4.2)
     thor (1.0.1)
     thread_safe (0.3.6)
     tilt (2.0.10)
@@ -289,6 +288,7 @@ DEPENDENCIES
   sorcery
   spring
   spring-watcher-listen (~> 2.0.0)
+  sqlite3
   tzinfo-data
   web-console (>= 3.3.0)
   webdrivers
