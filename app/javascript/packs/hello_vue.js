@@ -12,7 +12,7 @@ import axios from '../plugins/axios'
 import store from '../store'
 import '../plugins/veevalidate'
 
-import 'bootstrap/dist/css/bootstrap'
+import 'bootstrap/dist/css/bootstrap.css'
 
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
