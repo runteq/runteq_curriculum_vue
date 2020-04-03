@@ -48,6 +48,16 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 
   gem 'foreman'
+
+  # deploy
+  gem 'capistrano'
+  gem 'capistrano-rbenv'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rails'
+  gem 'capistrano3-puma'
+  gem 'capistrano-nginx'
+  gem 'capistrano-rails-console'
+  gem 'capistrano-yarn'
 end
 
 group :test do
