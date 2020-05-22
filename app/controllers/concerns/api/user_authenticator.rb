@@ -7,6 +7,8 @@ module Api::UserAuthenticator
 
     payload, = User.decode bearer_token
     @current_user ||= User.find_by(id: payload['user_id'])
+  rescue JWT::ExpiredSignature
+    nil
   end
 
   def authenticate!
