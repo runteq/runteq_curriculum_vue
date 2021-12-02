@@ -1,10 +1,5 @@
 <template>
-  <div class="d-flex flex-column min-vh-100">
-    <header class="mb-auto">
-      <nav class="navbar navbar-dark bg-dark">
-        <span class="navbar-brand mb-0 h1">{{ title }}</span>
-      </nav>
-    </header>
+  <div>
     <div class="d-flex">
       <div class="col-4 bg-light rounded shadow m-3 p-3">
         <div class="h4">TODO</div>
@@ -16,9 +11,6 @@
     <div class="text-center">
       <router-link :to="{ name: 'TopIndex' }" class="btn btn-dark mt-5">戻る</router-link>
     </div>
-    <footer class="mt-auto text-center">
-      <small>Copyright &copy; 2020. RUNTEQ</small>
-    </footer>
   </div>
 </template>
 
@@ -27,7 +19,6 @@ export default {
   name: "TaskIndex",
   data() {
     return {
-      title: "タスク管理アプリ",
       tasks: [
         {
           id: 1,
