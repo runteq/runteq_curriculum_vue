@@ -1,10 +1,12 @@
 require 'rails_helper'
 RSpec.describe 'タスク管理', type: :system do
+  let(:user) { create(:user) }
+  let(:other_user) { create(:user) }
   it 'トップページにはじめるボタンが表示されている' do
     visit root_path
     expect(page).to have_content('はじめる'), 'トップページにはじめるボタンが表示されていません'
   end
-
+=begin 課題10からは認証が加わるのでコメントアウト
   it 'タスクページに戻るボタンが表示されている' do
     visit '/tasks'
     expect(page).to have_content('戻る'), 'タスクページに戻るボタンが表示されていません'
@@ -191,6 +193,35 @@ RSpec.describe 'タスク管理', type: :system do
     within "#done-list" do
       expect(page).to have_content('JavaScriptのfor文とif文を理解する'), 'DONEに更新したタスクがDONEタスクリストに表示されていません'
     end
+  end
+=end
+  it 'ログイン状態でタイトルと説明文とステータスを入力して「追加」をクリックしたら新しいタスクが追加されている' do
+    login_as(user)
+    click_on('タスクを追加')
+    fill_in 'タイトル', with: 'JSを勉強する'
+    fill_in '説明文', with: 'ES6完全に理解する'
+    select 'TODO', from: 'ステータス'
+    click_on '追加'
+    expect(page).to_not have_selector('#task-create-modal'), 'タスク追加モーダルが閉じられていません'
+    expect(page).to have_content('JSを勉強する'), '新規追加したタスクが画面に表示されていません'
+  end
+
+  it '他人のタスク詳細モーダルには「編集」と「削除」ボタンが表示されない。' do
+    others_task = create(:task, title: '他人のタスク', user: other_user)
+    login_as(user)
+    # 他人のタスク詳細モーダルを表示する
+    find("#task-#{others_task.id}").click
+    expect(page).to_not have_content('編集'), '他人のタスクに編集ボタンが表示されています'
+    expect(page).to_not have_content('削除'), '他人のタスクに削除ボタンが表示されています'
+  end
+
+  it '自分のタスクには「編集」と「削除」ボタンが表示される' do
+    my_task = create(:task, title: '自分のタスク', user: user)
+    login_as(user)
+    # 自分のタスク詳細モーダルを表示する
+    find("#task-#{my_task.id}").click
+    expect(page).to have_content('編集'), '自分のタスクに編集ボタンが表示されていません'
+    expect(page).to have_content('削除'), '自分のタスクに削除ボタンが表示されていません'
   end
 end
 

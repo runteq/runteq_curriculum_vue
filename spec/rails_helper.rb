@@ -63,4 +63,5 @@ RSpec.configure do |config|
 
   # skip Namespace to use FactoryBot
   config.include FactoryBot::Syntax::Methods
+  config.include LoginMacros, type: :system
 end
