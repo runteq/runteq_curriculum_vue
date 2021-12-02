@@ -19,7 +19,18 @@ export default new Vuex.Store({
     },
     addTask: (state, task) => {
       state.tasks.push(task)
-    }
+    },
+    deleteTask: (state, deleteTask) => {
+      state.tasks = state.tasks.filter(task => {
+        return task.id != deleteTask.id
+      })
+    },
+    updateTask: (state, updateTask) => {
+      const index = state.tasks.findIndex(task => {
+        return task.id == updateTask.id
+      })
+      state.tasks.splice(index, 1, updateTask)
+    },
   },
 
   actions: {
@@ -34,6 +45,18 @@ export default new Vuex.Store({
       return axios.post('tasks', task)
         .then(res => {
           commit('addTask', res.data)
+        })
+    },
+    deleteTask({commit}, task) {
+      return axios.delete(`tasks/${task.id}`)
+        .then(res => {
+          commit('deleteTask', res.data)
+        })
+    },
+    updateTask({commit}, task) {
+      return axios.patch(`tasks/${task.id}`, task)
+        .then(res => {
+          commit('updateTask', res.data)
         })
     }
   },

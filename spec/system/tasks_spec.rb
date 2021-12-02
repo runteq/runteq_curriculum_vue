@@ -81,4 +81,49 @@ RSpec.describe 'タスク管理', type: :system do
     click_on '追加'
     expect(page).to have_selector('#task-create-modal'), 'タスク追加モーダルが閉じてしまっています'
   end
+
+  it 'タスク詳細のモーダルに「編集」ボタン、「削除」ボタンが表示されていること' do
+    task = create(:task, title: 'JavaScriptのfor文を理解する', description: 'JavaScript本格入門の第二章に書かれているfor文を読んで理解する')
+    visit '/tasks'
+    find("#task-#{task.id}").click
+    within "#task-detail-modal-#{task.id}" do
+      expect(page).to have_button('編集'), 'タスク詳細モーダルに「編集」ボタンがありません'
+      expect(page).to have_button('削除'), 'タスク詳細モーダルに「削除」ボタンがありません'
+    end
+  end
+
+  it '「編集」ボタンを押すとモーダルが表示され、各フィールドの値を変更して「更新」ボタンを押すとその内容が反映される' do
+    task = create(:task, title: 'JavaScriptのfor文を理解する', description: 'JavaScript本格入門の第二章に書かれているfor文を読んで理解する')
+    visit '/tasks'
+    find("#task-#{task.id}").click
+    within "#task-detail-modal-#{task.id}" do
+      click_on '編集'
+    end
+    sleep 0.5 # Bootstrapのモーダル対応
+    expect(page).to_not have_selector("#task-detail-modal-#{task.id}"), 'タスク詳細モーダルが閉じられていません'
+    within "#task-edit-modal-#{task.id}" do
+      fill_in 'タイトル', with: 'JavaScriptのfor文とif文を理解する'
+      fill_in '説明文', with: 'ES6とES5を完全に理解する'
+      click_on '更新'
+    end
+    sleep 0.5 # Bootstrapのモーダル対応
+    expect(page).to_not have_selector("#task-edit-modal-#{task.id}"), 'タスク編集モーダルが閉じられていません'
+    expect(page).to have_content('JavaScriptのfor文とif文を理解する'), '更新後のタイトルがが一覧画面に表示されていません'
+    find("#task-#{task.id}").click
+    within "#task-detail-modal-#{task.id}" do
+      expect(page).to have_content('JavaScriptのfor文とif文を理解する'), '更新後のタイトルがタスク詳細モーダルに表示されていません'
+      expect(page).to have_content('ES6とES5を完全に理解する'), '更新後の説明文がタスク詳細モーダルに表示されていません'
+    end
+  end
+
+  it '「削除」ボタンを押すとタスクが一覧画面から削除される' do
+    task = create(:task, title: 'JavaScriptのfor文を理解する', description: 'JavaScript本格入門の第二章に書かれているfor文を読んで理解する')
+    visit '/tasks'
+    find("#task-#{task.id}").click
+    within "#task-detail-modal-#{task.id}" do
+      click_on '削除'
+    end
+    expect(page).to_not have_content('JavaScriptのfor文を理解する'), 'タスクが一覧画面から削除されていません'
+  end
 end
+
