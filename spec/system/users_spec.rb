@@ -50,5 +50,47 @@ RSpec.describe 'ユーザー機能', type: :system do
     click_on 'はじめる'
     expect(page).to have_current_path('/tasks'), 'タスクページに遷移できていません'
   end
+
+  it 'ユーザー登録フォームでバリデーションが機能していること' do
+    visit root_path
+    click_link 'ユーザー登録'
+    within "#register-form" do
+      fill_in 'ユーザー名', with: ''
+      expect(page).to have_content('ユーザー名は必須項目です'), '必須チェックのバリデーションエラーが表示されていません'
+      fill_in 'メールアドレス', with: ''
+      expect(page).to have_content('メールアドレスは必須項目です'), '必須チェックのバリデーションエラーが表示されていません'
+      fill_in 'メールアドレス', with: 'password'
+      expect(page).to have_content('メールアドレスの形式で入力してください'), 'フォーマットチェックのバリデーションエラーが表示されていません'
+      fill_in 'パスワード', with: ''
+      expect(page).to have_content('パスワードは必須項目です'), '必須チェックのバリデーションエラーが表示されていません'
+      fill_in 'パスワード（確認）', with: ''
+      expect(page).to have_content('パスワード（確認）は必須項目です'), '必須チェックのバリデーションエラーが表示されていません'
+      fill_in 'パスワード（確認）', with: 'aa'
+      expect(page).to have_content('パスワード（確認）は3文字以上で入力してください'), '文字数チェックのバリデーションエラーが表示されていません'
+      fill_in 'パスワード', with: 'password'
+      fill_in 'パスワード（確認）', with: 'passwordpassword'
+      expect(page).to have_content('パスワードと一致しません'), '一致チェックのバリデーションエラーが表示されていません'
+      click_on '登録'
+    end
+    expect(page).to have_current_path('/register'), 'バリデーションエラーが発生しているときに画面遷移してはいけません'
+  end
+
+  it 'ログインフォームでバリデーションが機能していること' do
+    visit root_path
+    click_link 'ログイン'
+    within "#login-form" do
+      fill_in 'メールアドレス', with: ''
+      expect(page).to have_content('メールアドレスは必須項目です'), '必須チェックのバリデーションエラーが表示されていません'
+      fill_in 'メールアドレス', with: 'password'
+      expect(page).to have_content('メールアドレスの形式で入力してください'), 'フォーマットチェックのバリデーションエラーが表示されていません'
+      fill_in 'パスワード', with: ''
+      expect(page).to have_content('パスワードは必須項目です'), '必須チェックのバリデーションエラーが表示されていません'
+      fill_in 'パスワード', with: 'aa'
+      expect(page).to have_content('パスワードは3文字以上で入力してください'), '文字数チェックのバリデーションエラーが表示されていません'
+      click_on 'ログイン'
+    end
+    expect(page).to have_current_path('/login'), 'バリデーションエラーが発生しているときに画面遷移してはいけません'
+  end
+
 end
 

@@ -223,5 +223,42 @@ RSpec.describe 'タスク管理', type: :system do
     expect(page).to have_content('編集'), '自分のタスクに編集ボタンが表示されていません'
     expect(page).to have_content('削除'), '自分のタスクに削除ボタンが表示されていません'
   end
+
+  it 'タスク追加フォームでバリデーションが機能していること' do
+    login_as(user)
+    click_on('タスクを追加')
+    within "#task-create-modal" do
+      fill_in 'タイトル', with: ''
+      expect(page).to have_content('タイトルは必須項目です'), '必須チェックのバリデーションエラーが表示されていません'
+      fill_in 'タイトル', with: 'a' * 51
+      expect(page).to have_content('タイトルは50文字以下で入力してください'), '文字数チェックのバリデーションエラーが表示されていません'
+      fill_in '説明文', with: 'a' * 501
+      expect(page).to have_content('説明文は500文字以下で入力してください'), '文字数チェックのバリデーションエラーが表示されていません'
+      click_on '追加'
+      expect(page).to have_content('ステータスは必須項目です'), '必須チェックのバリデーションエラーが表示されていません'
+    end
+    expect(page).to have_selector("#task-create-modal"), 'バリデーションエラーが発生しているときに画面遷移してはいけません'
+  end
+
+  it 'タスク編集フォームでバリデーションが機能していること' do
+    my_task = create(:task, title: '自分のタスク', user: user)
+    login_as(user)
+    find("#task-#{my_task.id}").click
+    within "#task-detail-modal-#{my_task.id}" do
+      click_on '編集'
+    end
+
+    within "#task-edit-modal-#{my_task.id}" do
+      fill_in 'タイトル', with: ' '
+      expect(page).to have_content('タイトルは必須項目です'), '必須チェックのバリデーションエラーが表示されていません'
+      fill_in 'タイトル', with: 'a' * 51
+      expect(page).to have_content('タイトルは50文字以下で入力してください'), '文字数チェックのバリデーションエラーが表示されていません'
+      fill_in '説明文', with: 'a' * 501
+      expect(page).to have_content('説明文は500文字以下で入力してください'), '文字数チェックのバリデーションエラーが表示されていません'
+      click_on '更新'
+    end
+
+    expect(page).to have_selector("#task-edit-modal-#{my_task.id}"), 'バリデーションエラーが発生しているときに画面遷移してはいけません'
+  end
 end
 

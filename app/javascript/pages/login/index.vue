@@ -1,35 +1,54 @@
 <template>
-  <div id="login-form" class="container w-50 text-center">
+  <div
+    id="login-form"
+    class="container w-50 text-center"
+  >
     <div class="h3 mb-3">
       ログイン
     </div>
-    <div class="form-group text-left">
-      <label for="email">メールアドレス</label>
-      <input
-        id="email"
-        v-model="user.email"
-        type="email"
-        class="form-control"
-        placeholder="test@example.com"
+    <ValidationObserver v-slot="{ handleSubmit }">
+      <div class="form-group text-left">
+        <ValidationProvider
+          v-slot="{ errors }"
+          rules="required|email"
+        >
+          <label for="email">メールアドレス</label>
+          <input
+            id="email"
+            v-model="user.email"
+            name="メールアドレス"
+            type="email"
+            class="form-control"
+            placeholder="test@example.com"
+          >
+          <span class="text-danger">{{ errors[0] }}</span>
+        </ValidationProvider>
+      </div>
+      <div class="form-group text-left">
+        <ValidationProvider
+          v-slot="{ errors }"
+          rules="required|min:3"
+        >
+          <label for="password">パスワード</label>
+          <input
+            id="password"
+            v-model="user.password"
+            name="パスワード"
+            type="password"
+            class="form-control"
+            placeholder="password"
+          >
+          <span class="text-danger">{{ errors[0] }}</span>
+        </ValidationProvider>
+      </div>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        @click="handleSubmit(login)"
       >
-    </div>
-    <div class="form-group text-left">
-      <label for="password">パスワード</label>
-      <input
-        id="password"
-        v-model="user.password"
-        type="password"
-        class="form-control"
-        placeholder="password"
-      >
-    </div>
-    <button
-      type="submit"
-      class="btn btn-primary"
-      @click="login"
-    >
-      ログイン
-    </button>
+        ログイン
+      </button>
+    </ValidationObserver>
   </div>
 </template>
 
