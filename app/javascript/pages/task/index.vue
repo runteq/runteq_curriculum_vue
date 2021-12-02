@@ -1,5 +1,11 @@
 <template>
   <div class="container-fluid">
+    <div class="form-row p-3" id="search-form">
+      <div class="form-group col-lg-6 offset-lg-3">
+        <label for="search">絞り込み</label>
+        <input type="text" v-model="searchTask" class="form-control" id="search" placeholder="タスク名を入力してください">
+      </div>
+    </div>
     <div class="row">
       <TaskList
         :tasks="todoTasks"
@@ -98,25 +104,31 @@ export default {
       isVisibleTaskDetailModal: false,
       isVisibleTaskCreateModal: false,
       isVisibleTaskEditModal: false,
-      taskEdit: {}
+      taskEdit: {},
+      searchTask: ""
     }
   },
   computed: {
     ...mapGetters("tasks", ["tasks"]),
     ...mapGetters("users", ["authUser"]),
     todoTasks() {
-      return this.tasks.filter(task => {
+      return this.filteredTasks.filter(task => {
         return task.status == "todo"
       })
     },
     doingTasks() {
-      return this.tasks.filter(task => {
+      return this.filteredTasks.filter(task => {
         return task.status == "doing"
       })
     },
     doneTasks() {
-      return this.tasks.filter(task => {
+      return this.filteredTasks.filter(task => {
         return task.status == "done"
+      })
+    },
+    filteredTasks() {
+      return this.tasks.filter(task => {
+        return task.title.indexOf(this.searchTask) != -1
       })
     }
   },
@@ -156,6 +168,7 @@ export default {
     async handleCreateTask(task) {
       try {
         await this.createTask(task);
+        this.resetSearchTask();
         this.handleCloseTaskCreateModal();
       } catch (error) {
         console.log(error);
@@ -172,11 +185,15 @@ export default {
     async handleUpdateTask(task) {
       try {
         await this.updateTask(task);
+        this.resetSearchTask();
         this.handleCloseTaskEditModal();
       } catch (error) {
         console.log(error);
       }
     },
+    resetSearchTask() {
+      this.searchTask = ""
+    }
   }
 }
 </script>
