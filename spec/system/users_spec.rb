@@ -92,5 +92,15 @@ RSpec.describe 'ユーザー機能', type: :system do
     expect(page).to have_current_path('/login'), 'バリデーションエラーが発生しているときに画面遷移してはいけません'
   end
 
+  it 'プロフィールの編集ができること' do
+    login_as(user)
+    visit '/profile'
+    fill_in 'ユーザー名', with: 'らんてっくたろう'
+    file_path = Rails.root.join('spec', 'fixtures', 'images', 'runtequn.jpg')
+    attach_file('プロフィール画像', file_path)
+    click_on '更新'
+    expect(page).to have_selector("img[src$='runtequn.jpg']"), 'プロフィール画像のアップロードができていません'
+  end
+
 end
 
