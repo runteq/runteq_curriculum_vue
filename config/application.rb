@@ -36,8 +36,8 @@ module RunteqCurriculumVue
       g.stylesheets false
       g.javascripts false
       g.helper false
-      g.template_engine false
-      g.test_framework false
+      g.template_engine :erb
+      g.test_framework nil
     end
   end
 end
