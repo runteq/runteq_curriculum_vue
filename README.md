@@ -55,3 +55,7 @@ $ bin/webpack-dev-server
 ```bash
 $ bundle exec foreman start
 ```
+
+- config/master.keyの配置
+`touch config/master.key`でファイルを作成して`e3c0406397e8f960e7e165206d57b579`を値として追記、保存してください。  
+※ 現場の開発フローでは`master.key`の値をGit管理しているREADMEなどのファイルに直に記載することはないので、他の開発者から共有してもらいローカルでファイルを作成します。  
