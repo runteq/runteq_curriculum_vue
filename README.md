@@ -20,7 +20,9 @@ Railsで作成されたAPIをフロントのVue.jsから呼び出すようなSPA
 
 - このプロジェクトで使用するライブラリをインストール
 ```bash
-$ bundle install --path vendor/bundle
+$ bundle config --local path 'vendor/bundle'
+$ bundle config --local build.sassc -- --disable-march-tune-native
+$ bundle install
 $ yarn install
 ```
 
