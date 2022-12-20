@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.6.5'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.2', '>= 6.0.2.1'
+gem 'rails', '~> 6.1.6.1'
 # Use Puma as the app server
 gem 'puma', '~> 4.1'
 # Use SCSS for stylesheets
@@ -27,7 +27,8 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'sorcery'
 
 group :production do
-  gem 'pg'
+  # gem 'pg'
+  gem 'sqlite3'
 end
 
 group :development, :test do
