@@ -3,4 +3,6 @@ set -e
 
 bin/rails db:migrate
 
-rm -f tmp/pids/server.pid && bundle exec foreman start
+rm -f tmp/pids/server.pid &&
+  bin/rails s &&
+  bin/webpack
