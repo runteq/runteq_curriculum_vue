@@ -3,4 +3,4 @@ set -e
 
 bin/rails db:migrate
 
-rm -f tmp/pids/server.pid && bin/rails s
+rm -f tmp/pids/server.pid && bundle exec foreman start
